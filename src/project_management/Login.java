@@ -27,7 +27,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        conn = JavaConnect.connecrDB();
+        conn = ConnectDatabase.ConnectDB();
     }
     
      public void closeWindownLogin() {
@@ -135,7 +135,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
-        String sql = "select * from login where usename=? and password=?";
+        String sql = "select * from Admin where Name=? and Password=?";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, txt_usename.getText());
@@ -146,10 +146,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username and Password is correct");
                 useNameLogin = txt_usename.getText();
                 rs.close();
-                pst.close();
-
-                Employee_info s = new Employee_info();
-                s.setVisible(true);
+                pst.close();            
                 closeWindownLogin();
             } else {
                 JOptionPane.showMessageDialog(null, "Username and Password is not correct");

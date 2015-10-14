@@ -47,24 +47,29 @@
                           <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txt_mathuoc" linkSize="1" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
-                          <Component id="txt_tenthuoc" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_tenloaithuoc" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_tennhacungcap" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_soluong" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_dongia" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_nuocsanxuat" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jdate_hansudung" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jdate_ngaysanxuat" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_hamluong" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_congdung" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txt_mathuoc" linkSize="1" alignment="0" pref="129" max="32767" attributes="0"/>
+                          <Component id="txt_tenthuoc" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_tenloaithuoc" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_tennhacungcap" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_soluong" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_dongia" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_nuocsanxuat" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_hamluong" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txt_congdung" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jdate_hansudung" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jdate_ngaysanxuat" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="290" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,12 +128,17 @@
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <Component id="jdate_hansudung" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="jdate_ngaysanxuat" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jdate_ngaysanxuat" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <Component id="txt_hamluong" min="-2" max="-2" attributes="0"/>
@@ -144,7 +154,9 @@
                       <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -224,10 +236,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txt_nuocsanxuat">
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jdate_hansudung">
-    </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jdate_ngaysanxuat">
-    </Component>
     <Component class="javax.swing.JTextField" name="txt_hamluong">
     </Component>
     <Component class="javax.swing.JTextField" name="txt_congdung">
@@ -261,5 +269,17 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Update"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="jdate_hansudung">
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="jdate_ngaysanxuat">
+    </Component>
   </SubComponents>
 </Form>

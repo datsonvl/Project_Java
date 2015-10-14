@@ -24,10 +24,10 @@ Connection conn = null;
      */
     public Medicine() {
         initComponents();
-        conn = ConnectDatabase.ConnectDB();
-        UpdateTable();
+        conn = JavaConnect.connecrDB();
+        UpdateTableMedicine();
     }
-    private void UpdateTable() {
+    private void UpdateTableMedicine() {
 
         try {
             String sql = "select * from Medicine";
@@ -67,13 +67,14 @@ Connection conn = null;
         txt_soluong = new javax.swing.JTextField();
         txt_dongia = new javax.swing.JTextField();
         txt_nuocsanxuat = new javax.swing.JTextField();
-        jdate_hansudung = new com.toedter.calendar.JDateChooser();
-        jdate_ngaysanxuat = new com.toedter.calendar.JDateChooser();
         txt_hamluong = new javax.swing.JTextField();
         txt_congdung = new javax.swing.JTextField();
         bt_Add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblist = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jdate_hansudung = new com.toedter.calendar.JDateChooser();
+        jdate_ngaysanxuat = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +122,13 @@ Connection conn = null;
         ));
         jScrollPane1.setViewportView(jtblist);
 
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,24 +155,28 @@ Connection conn = null;
                             .addComponent(jLabel11)
                             .addComponent(jLabel12))
                         .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_mathuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_tenthuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_tenloaithuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_tennhacungcap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_soluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_dongia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nuocsanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdate_hansudung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdate_ngaysanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_hamluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_congdung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_mathuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                            .addComponent(txt_tenthuoc)
+                            .addComponent(txt_tenloaithuoc)
+                            .addComponent(txt_tennhacungcap)
+                            .addComponent(txt_soluong)
+                            .addComponent(txt_dongia)
+                            .addComponent(txt_nuocsanxuat)
+                            .addComponent(txt_hamluong)
+                            .addComponent(txt_congdung)
+                            .addComponent(jdate_hansudung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jdate_ngaysanxuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jdate_hansudung, jdate_ngaysanxuat, txt_congdung, txt_dongia, txt_hamluong, txt_mathuoc, txt_nuocsanxuat, txt_soluong, txt_tenloaithuoc, txt_tennhacungcap, txt_tenthuoc});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_congdung, txt_dongia, txt_hamluong, txt_mathuoc, txt_nuocsanxuat, txt_soluong, txt_tenloaithuoc, txt_tennhacungcap, txt_tenthuoc});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,11 +222,14 @@ Connection conn = null;
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jdate_hansudung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jdate_ngaysanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel10))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jdate_ngaysanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(txt_hamluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,7 +240,9 @@ Connection conn = null;
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -249,11 +266,41 @@ Connection conn = null;
             pst.setString(11, txt_congdung.getText());
             pst.execute();
             JOptionPane.showMessageDialog(null, "Added!!");
-            UpdateTable();
+            UpdateTableMedicine();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_bt_AddActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         try{
+           // 
+           // 
+            String value0 = txt_mathuoc.getText();
+            String value1 = txt_tenthuoc.getText();
+            String value2 = txt_tenloaithuoc.getText();
+            String value3 = txt_tennhacungcap.getText();
+            String value4 = txt_soluong.getText();
+            String value5 = txt_dongia.getText();
+            String value6 = txt_nuocsanxuat.getText();
+            String value7 = ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).getText();
+            String value8 = ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText();
+            String value9 = txt_hamluong.getText();
+            String value10 = txt_congdung.getText();
+            
+            String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"' where ma_thuoc='"+value0+"' ";
+            
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Update success");
+            
+        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        UpdateTableMedicine();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,6 +339,7 @@ Connection conn = null;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_Add;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

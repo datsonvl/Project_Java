@@ -7,7 +7,9 @@ package project_management;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.MessageFormat;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import net.proteanit.sql.DbUtils;
 
@@ -72,9 +74,10 @@ Connection conn = null;
         bt_Add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblist = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jdate_hansudung = new com.toedter.calendar.JDateChooser();
         jdate_ngaysanxuat = new com.toedter.calendar.JDateChooser();
+        btnPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -122,10 +125,17 @@ Connection conn = null;
         ));
         jScrollPane1.setViewportView(jtblist);
 
-        jButton1.setText("Update");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnPrint.setText("Print");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
             }
         });
 
@@ -172,7 +182,9 @@ Connection conn = null;
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(290, 290, 290)
-                .addComponent(jButton1)
+                .addComponent(btnUpdate)
+                .addGap(71, 71, 71)
+                .addComponent(btnPrint)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -241,7 +253,9 @@ Connection conn = null;
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnPrint))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -272,7 +286,7 @@ Connection conn = null;
         }
     }//GEN-LAST:event_bt_AddActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
          try{
            // 
@@ -300,7 +314,18 @@ Connection conn = null;
             JOptionPane.showMessageDialog(null, e);
         }
         UpdateTableMedicine();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        MessageFormat header = new MessageFormat("Medicine List");
+        MessageFormat footer = new MessageFormat("Pase{0,number,integer}");
+        
+        try{
+            jtblist.print(JTable.PrintMode.NORMAL,header,footer);
+        }catch(Exception e){
+            System.err.format("Can not print %s%n", e.getMessage());
+        }
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,7 +364,8 @@ Connection conn = null;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_Add;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPrint;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

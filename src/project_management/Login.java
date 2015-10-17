@@ -146,7 +146,10 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username and Password is correct");
                 useNameLogin = txt_usename.getText();
                 rs.close();
-                pst.close();            
+                pst.close(); 
+                
+                Medicine s = new Medicine();
+                s.setVisible(true);
                 closeWindownLogin();
             } else {
                 JOptionPane.showMessageDialog(null, "Username and Password is not correct");

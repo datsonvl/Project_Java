@@ -496,7 +496,7 @@ public class Medicine extends javax.swing.JFrame {
     }//GEN-LAST:event_jtblistMouseClicked
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
+        
         //sap xep day tang dan theo nam
         
         for(int i=0;i<year.length-1;i++)

@@ -31,8 +31,8 @@ public class Medicine extends javax.swing.JFrame {
      */
     public Medicine() {
         initComponents();
-        //conn = JavaConnect.connecrDB();
-        conn = ConnectDatabase.ConnectDB();
+        conn = JavaConnect.connecrDB();
+      //  conn = JavaConnect.connecrDB()();
         UpdateTableMedicine();
     }
     private void UpdateTableMedicine() {

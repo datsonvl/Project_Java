@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -309,6 +310,11 @@ public class Medicine extends javax.swing.JFrame {
         jMenu5.setText("Sắp xếp");
 
         jMenuItem13.setText("Sắp xếp theo tên");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem13);
 
         jMenuItem14.setText("Sắp xếp theo thời gian nhập");
@@ -531,6 +537,19 @@ public class Medicine extends javax.swing.JFrame {
             count += 1;
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        String sql;
+        sql = "select * from Medicine order by ten_thuoc asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtblist.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments

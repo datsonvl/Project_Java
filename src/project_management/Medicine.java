@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package project_management;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -97,6 +99,8 @@ public class Medicine extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItemSeachMaThuoc = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -328,6 +332,18 @@ public class Medicine extends javax.swing.JFrame {
         jMenu1.add(jMenu5);
 
         jMenu6.setText("Tìm thuốc");
+
+        jMenuItemSeachMaThuoc.setText("Mã thuốc");
+        jMenuItemSeachMaThuoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSeachMaThuocActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItemSeachMaThuoc);
+
+        jMenuItem4.setText("Tên thuốc");
+        jMenu6.add(jMenuItem4);
+
         jMenu1.add(jMenu6);
 
         jMenu7.setText("Thuốc hết hạn");
@@ -551,6 +567,49 @@ public class Medicine extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jMenuItemSeachMaThuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSeachMaThuocActionPerformed
+        String str = JOptionPane.showInputDialog(this, "Nhập mã thuốc cần tìm");
+        try {
+            String sql = "select * from Medicine where ma_thuoc=?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, str);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Có hóa đơn trong danh sách");
+                String value1 = rs.getString("ma_thuoc");
+                        txt_mathuoc.setText(value1);
+                        String value2 = rs.getString("ten_thuoc");
+                        txt_tenthuoc.setText(value2);
+                        String value3 = rs.getString("loai_thuoc");
+                        txt_tenloaithuoc.setText(value3);
+                        String value4 = rs.getString("nha_san_xuat");
+                        txt_tennhacungcap.setText(value4);
+                        String value5 = rs.getString("so_luong");
+                        txt_soluong.setText(value5);
+                        String value6 = rs.getString("don_gia");
+                        txt_dongia.setText(value6);
+                        String value7 = rs.getString("nuoc_san_xuat");
+                        txt_nuocsanxuat.setText(value7);
+                        String value8 = rs.getString("han_dung");
+                        ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+                        String value9 = rs.getString("ngay_sx");
+                        ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+                        String value10 = rs.getString("ham_luong");
+                        txt_hamluong.setText(value10);
+                        String value11 = rs.getString("cong_dung");
+                        txt_congdung.setText(value11);  
+            } else {
+                int click = JOptionPane.showConfirmDialog(null, "Không có mã hóa đơn.\nBạn muốn tiếp tục tìm không ?", "Question", JOptionPane.YES_NO_OPTION);
+                if(click == JOptionPane.YES_OPTION){
+                    jMenuItemSeachMaThuocActionPerformed(evt);
+                }
+                
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItemSeachMaThuocActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -614,10 +673,12 @@ public class Medicine extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem jMenuItemSeachMaThuoc;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdate_hansudung;

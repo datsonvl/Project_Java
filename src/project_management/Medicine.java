@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -28,16 +30,51 @@ public class Medicine extends javax.swing.JFrame {
     Connection conn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    private int[] year = new int[1000];
     /**
      * Creates new form Medicine
      */
     public Medicine() {
         initComponents();
-        conn = JavaConnect.connecrDB();
-      //  conn = JavaConnect.connecrDB()();
+        conn = ConnectDatabase.ConnectDB();   
         UpdateTableMedicine();
+        Time_System();
     }
+    
+    private void Time_System(){
+    Calendar cal = new GregorianCalendar();
+    int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            date_txt.setText("Date: "+day+"/"+(month+1)+"/"+year);
+          int second = cal.get(Calendar.SECOND);
+            int minute = cal.get(Calendar.MINUTE);
+            int hour = cal.get(Calendar.HOUR);  
+        Time_txt.setText("Time: "+hour+":"+minute+":"+second);
+        Thread clock = new Thread(){
+        public void run(){
+        for(;;){
+            Calendar cal = new GregorianCalendar();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            date_txt.setText("Date: "+day+"/"+(month+1)+"/"+year);
+            int second = cal.get(Calendar.SECOND);
+            int minute = cal.get(Calendar.MINUTE);
+            int hour = cal.get(Calendar.HOUR);  
+            Time_txt.setText("Time: "+hour+":"+minute+":"+second);
+            try{
+            sleep(1000);
+            }catch(InterruptedException ex)
+            {
+                Logger.getLogger(Medicine.class.getName()).log(Level.SEVERE,"error");
+            }
+        }
+            
+        }
+        };
+        clock.start();
+    }
+    
     private void UpdateTableMedicine() {
 
         try {
@@ -50,6 +87,9 @@ public class Medicine extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +138,8 @@ public class Medicine extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItemSeachMaThuoc = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -106,6 +148,8 @@ public class Medicine extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        date_txt = new javax.swing.JMenu();
+        Time_txt = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("THUỐC");
@@ -329,6 +373,22 @@ public class Medicine extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem14);
 
+        jMenuItem3.setText("Sắp xếp theo hạn sử dụng");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem3);
+
+        jMenuItem5.setText("Sắp xếp theo ngày sản xuất");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem5);
+
         jMenu1.add(jMenu5);
 
         jMenu6.setText("Tìm thuốc");
@@ -348,10 +408,20 @@ public class Medicine extends javax.swing.JFrame {
 
         jMenu7.setText("Thuốc hết hạn");
 
-        jMenuItem1.setText("Danh sách ");
+        jMenuItem1.setText("Tạo danh sách");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem1);
 
-        jMenuItem2.setText("Xóa");
+        jMenuItem2.setText("Danh sách");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem2);
 
         jMenu1.add(jMenu7);
@@ -363,6 +433,12 @@ public class Medicine extends javax.swing.JFrame {
 
         jMenu2.setText("About");
         jMenuBar1.add(jMenu2);
+
+        date_txt.setText("Date");
+        jMenuBar1.add(date_txt);
+
+        Time_txt.setText("Time");
+        jMenuBar1.add(Time_txt);
 
         setJMenuBar(jMenuBar1);
 
@@ -393,9 +469,14 @@ public class Medicine extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+        
+            Calendar cal = new GregorianCalendar();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);         
+            String datetime = day+"/"+(month+1)+"/"+year;
         try {
-            String sql = "Insert into Medicine (ma_thuoc,ten_thuoc,loai_thuoc,nha_san_xuat,so_luong,don_gia,nuoc_san_xuat,han_dung,ngay_sx,ham_luong,cong_dung) values (?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into Medicine (ma_thuoc,ten_thuoc,loai_thuoc,nha_san_xuat,so_luong,don_gia,nuoc_san_xuat,han_dung,ngay_sx,ham_luong,cong_dung,Time_enter) values (?,?,?,?,?,?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setString(1, txt_mathuoc.getText());
             pst.setString(2, txt_tenthuoc.getText());
@@ -404,26 +485,11 @@ public class Medicine extends javax.swing.JFrame {
             pst.setString(5, txt_soluong.getText());
             pst.setString(6, txt_dongia.getText());
             pst.setString(7, txt_nuocsanxuat.getText());
-            pst.setString(8, ((JTextField) jdate_hansudung.getDateEditor().getUiComponent()).getText());
-            Calendar cal = new GregorianCalendar();
-            year[Integer.parseInt(txt_mathuoc.getText())] = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            String date = ((JTextField) jdate_hansudung.getDateEditor().getUiComponent()).getText();
-            String[] mangDate = date.split("/");
-            int year2 = Integer.parseInt(mangDate[2]);
-            int month2 = Integer.parseInt(mangDate[1]);
-            int day2 = Integer.parseInt(mangDate[0]);
-                        System.out.println(year);
-                        System.out.println(month);
-                        System.out.println(day);
-                        System.out.println(year2);
-                        System.out.println(month2);
-                        System.out.println(day2);
-                        //chưa xong...
+            pst.setString(8, ((JTextField) jdate_hansudung.getDateEditor().getUiComponent()).getText());                   
             pst.setString(9, ((JTextField) jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText());
             pst.setString(10, txt_hamluong.getText());
             pst.setString(11, txt_congdung.getText());
+            pst.setString(12, datetime);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Added!!");
             UpdateTableMedicine();
@@ -433,7 +499,12 @@ public class Medicine extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
+       
+        Calendar cal = new GregorianCalendar();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);         
+            String datetime = day+"/"+(month+1)+"/"+year;
          try{
            // 
            // 
@@ -448,8 +519,8 @@ public class Medicine extends javax.swing.JFrame {
             String value8 = ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText();
             String value9 = txt_hamluong.getText();
             String value10 = txt_congdung.getText();
-            
-            String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"' where ma_thuoc='"+value0+"' ";
+            String value11 = datetime;
+            String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"',Time_enter='"+value11+"' where ma_thuoc='"+value0+"' ";
             
             pst = conn.prepareStatement(sql);
             pst.execute();
@@ -475,7 +546,7 @@ public class Medicine extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jtblistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblistMouseClicked
-        // TODO add your handling code here:
+       
         try{
              
             int row = jtblist.getSelectedRow();
@@ -518,39 +589,15 @@ public class Medicine extends javax.swing.JFrame {
     }//GEN-LAST:event_jtblistMouseClicked
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        
-        //sap xep day tang dan theo nam
-        
-        for(int i=0;i<year.length-1;i++)
-        {
-            for(int j=i+1;j<year.length;j++)
-            if(year[i]>year[j])
-            {
-                int tg = year[i];
-                year[i] = year[j];
-                year[j] = tg;
-            }
+  
+        String sql = "select * from Medicine order by Time_enter asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtblist.setModel(DbUtils.resultSetToTableModel(rs));
         }
-        //xet tung nhom nam
-        int count = 0;
-        for(int i = 0;i<year.length-1;i+=count)
-        {
-            for(int j=i+1;j<year.length;j++)
-            {
-                count = 0;
-            if(year[i] == year[j])
-            {
-                count += 1;
-            }else 
-            {
-                //so sanh theo thang
-                
-                
-                //so sanh theo ngay
-                break;
-            }
-                }
-            count += 1;
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
@@ -610,6 +657,158 @@ public class Medicine extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemSeachMaThuocActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       
+         String sql;
+        sql = "select * from Medicine order by han_dung asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtblist.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        
+         String sql;
+        sql = "select * from Medicine order by ngay_sx asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtblist.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+           // format truoc khi add       
+            try{
+                   
+            String sql = "delete from Medicine2 where ma_thuoc=?";
+          
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txt_mathuoc.getText());
+            pst.execute();          
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+            
+            Calendar cal = new GregorianCalendar();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);                             
+            String[] m = new String[1000];          
+         
+            for(int i=0;i<jtblist.getRowCount();i++)
+            {
+                m[i] = (String)jtblist.getModel().getValueAt(i, 7);
+                String[] mangDate = m[i].split("/");
+                int year2 = Integer.parseInt(mangDate[2]);               
+                int month2 = Integer.parseInt(mangDate[1]);            
+                int day2 = Integer.parseInt(mangDate[0]); 
+                //for(int j=0;j<jtblist.getColumnCount();j++)
+                //{
+                //System.out.println(jtblist.getModel().getValueAt(i, j));
+                //}               
+                if(year2<year){
+                    try {
+            String sql = "Insert into Medicine2 (ma_thuoc,ten_thuoc,loai_thuoc,nha_san_xuat,so_luong,don_gia,nuoc_san_xuat,han_dung,ngay_sx,ham_luong,cong_dung) values (?,?,?,?,?,?,?,?,?,?,?)";
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, jtblist.getModel().getValueAt(i, 0).toString());               
+                pst.setString(2, jtblist.getModel().getValueAt(i, 1).toString());
+                pst.setString(3, (String)jtblist.getModel().getValueAt(i, 2));
+                pst.setString(4, (String)jtblist.getModel().getValueAt(i, 3));
+                pst.setString(5, (String)jtblist.getModel().getValueAt(i, 4));
+                pst.setString(6, (String)jtblist.getModel().getValueAt(i, 5));
+                pst.setString(7, (String)jtblist.getModel().getValueAt(i, 6));
+                pst.setString(8, (String)jtblist.getModel().getValueAt(i, 7));
+                pst.setString(9, (String)jtblist.getModel().getValueAt(i, 8));
+                pst.setString(10, (String)jtblist.getModel().getValueAt(i,9));
+                pst.setString(11, (String)jtblist.getModel().getValueAt(i, 10));
+               
+                pst.execute();
+                pst.close();
+            //JOptionPane.showMessageDialog(null, "Added!!");
+            //UpdateTableMedicine();
+                }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+                }
+                }
+               //else if(year2 == year&&month2<month){
+                else if(year2 == year){
+                if(month2<(month+1)){
+                    try {
+            String sql = "Insert into Medicine2 (ma_thuoc,ten_thuoc,loai_thuoc,nha_san_xuat,so_luong,don_gia,nuoc_san_xuat,han_dung,ngay_sx,ham_luong,cong_dung) values (?,?,?,?,?,?,?,?,?,?,?)";
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, jtblist.getModel().getValueAt(i, 0).toString());
+                pst.setString(2, jtblist.getModel().getValueAt(i, 1).toString());
+                pst.setString(3, (String)jtblist.getModel().getValueAt(i, 2));
+                pst.setString(4, (String)jtblist.getModel().getValueAt(i, 3));
+                pst.setString(5, (String)jtblist.getModel().getValueAt(i, 4));
+                pst.setString(6, (String)jtblist.getModel().getValueAt(i, 5));
+                pst.setString(7, (String)jtblist.getModel().getValueAt(i, 6));
+                pst.setString(8, (String)jtblist.getModel().getValueAt(i, 7));
+                pst.setString(9, (String)jtblist.getModel().getValueAt(i, 8));
+                pst.setString(10, (String)jtblist.getModel().getValueAt(i,9));
+                pst.setString(11, (String)jtblist.getModel().getValueAt(i, 10));
+               
+                pst.execute();
+                pst.close();
+            //JOptionPane.showMessageDialog(null, "Added!!");
+            //UpdateTableMedicine();
+                }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+                }
+                }else if(month2 == month+1){
+                if(day2<day){
+                
+                  try {
+            String sql = "Insert into Medicine2 (ma_thuoc,ten_thuoc,loai_thuoc,nha_san_xuat,so_luong,don_gia,nuoc_san_xuat,han_dung,ngay_sx,ham_luong,cong_dung) values (?,?,?,?,?,?,?,?,?,?,?)";
+            pst = conn.prepareStatement(sql);            
+            pst.setString(1, jtblist.getModel().getValueAt(i, 0).toString());                       
+                pst.setString(2, jtblist.getModel().getValueAt(i, 1).toString());
+                pst.setString(3, (String)jtblist.getModel().getValueAt(i, 2));
+                pst.setString(4, (String)jtblist.getModel().getValueAt(i, 3));
+                pst.setString(5, (String)jtblist.getModel().getValueAt(i, 4));
+                pst.setString(6, (String)jtblist.getModel().getValueAt(i, 5));
+                pst.setString(7, (String)jtblist.getModel().getValueAt(i, 6));
+                pst.setString(8, (String)jtblist.getModel().getValueAt(i, 7));
+                pst.setString(9, (String)jtblist.getModel().getValueAt(i, 8));
+                pst.setString(10, (String)jtblist.getModel().getValueAt(i,9));
+                pst.setString(11, (String)jtblist.getModel().getValueAt(i, 10));
+               
+                pst.execute();
+                pst.close();
+            //JOptionPane.showMessageDialog(null, "Added!!");
+            //UpdateTableMedicine();
+                }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+                }
+                }else {System.out.println("chua het han");}
+                }
+                 }
+                
+                else{
+                JOptionPane.showMessageDialog(null, "Thuoc co ma "+ i+1 + " chua het han!");
+                    
+                }
+            }
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        List_Thuoc_Het_Han list = new List_Thuoc_Het_Han();
+        list.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -646,6 +845,8 @@ public class Medicine extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Time_txt;
+    private javax.swing.JMenu date_txt;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -673,7 +874,9 @@ public class Medicine extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

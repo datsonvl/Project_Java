@@ -35,7 +35,8 @@ public class Medicine extends javax.swing.JFrame {
      */
     public Medicine() {
         initComponents();
-        conn = ConnectDatabase.ConnectDB();   
+  //      conn = ConnectDatabase.ConnectDB();   
+        conn = JavaConnect.connecrDB();
         UpdateTableMedicine();
         Time_System();
     }
@@ -142,7 +143,7 @@ public class Medicine extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItemSeachMaThuoc = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItemSeachTenThuoc = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -401,8 +402,13 @@ public class Medicine extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItemSeachMaThuoc);
 
-        jMenuItem4.setText("Tên thuốc");
-        jMenu6.add(jMenuItem4);
+        jMenuItemSeachTenThuoc.setText("Tên thuốc");
+        jMenuItemSeachTenThuoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSeachTenThuocActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItemSeachTenThuoc);
 
         jMenu1.add(jMenu6);
 
@@ -622,7 +628,7 @@ public class Medicine extends javax.swing.JFrame {
             pst.setString(1, str);
             rs = pst.executeQuery();
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Có hóa đơn trong danh sách");
+                JOptionPane.showMessageDialog(null, "Có mã thuốc trong danh sách");
                 String value1 = rs.getString("ma_thuoc");
                         txt_mathuoc.setText(value1);
                         String value2 = rs.getString("ten_thuoc");
@@ -646,7 +652,7 @@ public class Medicine extends javax.swing.JFrame {
                         String value11 = rs.getString("cong_dung");
                         txt_congdung.setText(value11);  
             } else {
-                int click = JOptionPane.showConfirmDialog(null, "Không có mã hóa đơn.\nBạn muốn tiếp tục tìm không ?", "Question", JOptionPane.YES_NO_OPTION);
+                int click = JOptionPane.showConfirmDialog(null, "Không có mã thuốc cần tìm.\nBạn muốn tiếp tục tìm không ?", "Question", JOptionPane.YES_NO_OPTION);
                 if(click == JOptionPane.YES_OPTION){
                     jMenuItemSeachMaThuocActionPerformed(evt);
                 }
@@ -805,9 +811,52 @@ public class Medicine extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        List_Thuoc_Het_Han list = new List_Thuoc_Het_Han();
-        list.setVisible(true);
+    //    List_Thuoc_Het_Han list = new List_Thuoc_Het_Han();
+     //   list.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItemSeachTenThuocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSeachTenThuocActionPerformed
+         String str = JOptionPane.showInputDialog(this, "Nhập tên thuốc cần tìm");
+        try {
+            String sql = "select * from Medicine where ten_thuoc=?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, str);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Có tên thuốc trong danh sách");
+                String value1 = rs.getString("ma_thuoc");
+                        txt_mathuoc.setText(value1);
+                        String value2 = rs.getString("ten_thuoc");
+                        txt_tenthuoc.setText(value2);
+                        String value3 = rs.getString("loai_thuoc");
+                        txt_tenloaithuoc.setText(value3);
+                        String value4 = rs.getString("nha_san_xuat");
+                        txt_tennhacungcap.setText(value4);
+                        String value5 = rs.getString("so_luong");
+                        txt_soluong.setText(value5);
+                        String value6 = rs.getString("don_gia");
+                        txt_dongia.setText(value6);
+                        String value7 = rs.getString("nuoc_san_xuat");
+                        txt_nuocsanxuat.setText(value7);
+                        String value8 = rs.getString("han_dung");
+                        ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+                        String value9 = rs.getString("ngay_sx");
+                        ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+                        String value10 = rs.getString("ham_luong");
+                        txt_hamluong.setText(value10);
+                        String value11 = rs.getString("cong_dung");
+                        txt_congdung.setText(value11);  
+            } else {
+                int click = JOptionPane.showConfirmDialog(null, "Không có tên thuốc cần tìm.\nBạn muốn tiếp tục tìm không ?", "Question", JOptionPane.YES_NO_OPTION);
+                if(click == JOptionPane.YES_OPTION){
+                    jMenuItemSeachMaThuocActionPerformed(evt);
+                }
+                
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItemSeachTenThuocActionPerformed
     
     /**
      * @param args the command line arguments
@@ -875,13 +924,13 @@ public class Medicine extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jMenuItemSeachMaThuoc;
+    private javax.swing.JMenuItem jMenuItemSeachTenThuoc;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdate_hansudung;

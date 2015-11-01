@@ -5,6 +5,7 @@
  */
 package project_management;
 
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,9 +32,38 @@ public class Medicine_New extends javax.swing.JInternalFrame {
      */
     public Medicine_New() {
         initComponents();
-         conn = ConnectDatabase.ConnectDB();   
-       // conn = JavaConnect.connecrDB();
+         //conn = ConnectDatabase.ConnectDB();   
+        conn = JavaConnect.connecrDB();
         UpdateTableMedicine();
+        AutoCompleteThuoc();
+    }
+    // Auto completer some text field in medicine
+     public void AutoCompleteThuoc(){
+        TextAutoCompleter autoMaThuoc = new TextAutoCompleter(txt_mathuoc);
+        TextAutoCompleter autoTenThuoc = new TextAutoCompleter(txt_tenthuoc);
+        TextAutoCompleter autoNhaCungCap = new TextAutoCompleter(txt_tennhacungcap);
+        TextAutoCompleter autoNuocSanXuat = new TextAutoCompleter(txt_nuocsanxuat);
+        
+        try{
+            
+            String sql ="Select * from Medicine";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {                
+                String maThuoc = rs.getString("ma_thuoc");
+                autoMaThuoc.addItem(maThuoc);
+                String tenThuoc = rs.getString("ten_thuoc");
+                autoTenThuoc.addItem(tenThuoc);
+                String nhaCungCap = rs.getString("nha_san_xuat");
+                autoNhaCungCap.addItem(nhaCungCap);
+                String nuocSanXuat = rs.getString("nuoc_san_xuat");
+                autoNuocSanXuat.addItem(nuocSanXuat);
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
     }
 private void UpdateTableMedicine() {
 

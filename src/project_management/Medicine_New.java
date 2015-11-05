@@ -38,7 +38,7 @@ public class Medicine_New extends javax.swing.JInternalFrame {
         AutoCompleteThuoc();
     }
     // Auto completer some text field in medicine
-     public void AutoCompleteThuoc(){
+     public final void AutoCompleteThuoc(){
         TextAutoCompleter autoMaThuoc = new TextAutoCompleter(txt_mathuoc);
         TextAutoCompleter autoTenThuoc = new TextAutoCompleter(txt_tenthuoc);
         TextAutoCompleter autoNhaCungCap = new TextAutoCompleter(txt_tennhacungcap);

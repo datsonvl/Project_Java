@@ -102,9 +102,7 @@ private void UpdateTableMedicine() {
         jLabel8 = new javax.swing.JLabel();
         txt_nuocsanxuat = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jdate_hansudung = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
-        jdate_ngaysanxuat = new com.toedter.calendar.JDateChooser();
         jLabel11 = new javax.swing.JLabel();
         txt_hamluong = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -155,11 +153,7 @@ private void UpdateTableMedicine() {
 
         jLabel9.setText("Hạn sử dụng");
 
-        jdate_hansudung.setDateFormatString("dd/MM/yyyy");
-
         jLabel10.setText("Ngày sản xuất");
-
-        jdate_ngaysanxuat.setDateFormatString("dd/MM/yyyy");
 
         jLabel11.setText("Hàm lượng");
 
@@ -211,8 +205,6 @@ private void UpdateTableMedicine() {
                     .addComponent(txt_soluong)
                     .addComponent(txt_dongia)
                     .addComponent(txt_nuocsanxuat)
-                    .addComponent(jdate_hansudung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jdate_ngaysanxuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_mathuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                     .addComponent(txt_hamluong)
                     .addComponent(txt_congdung))
@@ -249,15 +241,11 @@ private void UpdateTableMedicine() {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel8)
                     .addComponent(txt_nuocsanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel9)
                 .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel9)
-                    .addComponent(jdate_hansudung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel10)
-                    .addComponent(jdate_ngaysanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addComponent(jLabel10)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel11)
                     .addComponent(txt_hamluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -322,6 +310,11 @@ private void UpdateTableMedicine() {
         jMenu4.setText("Xóa");
 
         jMenuItem5.setText("Xóa một loại thuốc");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem5);
 
         jMenuItem6.setText("Xóa loại thuốc đã chọn");
@@ -827,6 +820,22 @@ private void UpdateTableMedicine() {
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+         try{
+                   
+            String sql = "delete from Medicine2 where ma_thuoc=?";
+          
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txt_mathuoc.getText());
+            pst.execute();           
+            JOptionPane.showMessageDialog(null, "Deleted!");
+            UpdateTableMedicine();
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
@@ -867,8 +876,6 @@ private void UpdateTableMedicine() {
     private javax.swing.JMenuItem jMenuItemSeachTenThuoc;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.toedter.calendar.JDateChooser jdate_hansudung;
-    private com.toedter.calendar.JDateChooser jdate_ngaysanxuat;
     private javax.swing.JTable jtblist;
     private javax.swing.JTextField txt_congdung;
     private javax.swing.JTextField txt_dongia;

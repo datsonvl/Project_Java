@@ -33,7 +33,7 @@ public class Medicine_New extends javax.swing.JInternalFrame {
     public Medicine_New() {
         initComponents();
          //conn = ConnectDatabase.ConnectDB();   
-        conn = JavaConnect.connecrDB();
+        conn = ConnectDatabase.ConnectDB();
         UpdateTableMedicine();
         AutoCompleteThuoc();
     }
@@ -453,8 +453,8 @@ private void UpdateTableMedicine() {
             pst.setString(5, txt_soluong.getText());
             pst.setString(6, txt_dongia.getText());
             pst.setString(7, txt_nuocsanxuat.getText());
-            pst.setString(8, ((JTextField) jdate_hansudung.getDateEditor().getUiComponent()).getText());                   
-            pst.setString(9, ((JTextField) jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText());
+          //  pst.setString(8, ((JTextField) jdate_hansudung.getDateEditor().getUiComponent()).getText());                   
+         //   pst.setString(9, ((JTextField) jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText());
             pst.setString(10, txt_hamluong.getText());
             pst.setString(11, txt_congdung.getText());
             pst.setString(12, datetime);
@@ -483,14 +483,14 @@ private void UpdateTableMedicine() {
             String value4 = txt_soluong.getText();
             String value5 = txt_dongia.getText();
             String value6 = txt_nuocsanxuat.getText();
-            String value7 = ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).getText();
-            String value8 = ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText();
+      //      String value7 = ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).getText();
+    ////        String value8 = ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText();
             String value9 = txt_hamluong.getText();
             String value10 = txt_congdung.getText();
             String value11 = datetime;
-            String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"',Time_enter='"+value11+"' where ma_thuoc='"+value0+"' ";
+       //     String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"',Time_enter='"+value11+"' where ma_thuoc='"+value0+"' ";
             
-            pst = conn.prepareStatement(sql);
+         //   pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update success");
             
@@ -588,9 +588,9 @@ private void UpdateTableMedicine() {
                         String value7 = rs.getString("nuoc_san_xuat");
                         txt_nuocsanxuat.setText(value7);
                         String value8 = rs.getString("han_dung");
-                        ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+         //               ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
                         String value9 = rs.getString("ngay_sx");
-                        ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+        //                ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
                         String value10 = rs.getString("ham_luong");
                         txt_hamluong.setText(value10);
                         String value11 = rs.getString("cong_dung");
@@ -631,9 +631,9 @@ private void UpdateTableMedicine() {
                         String value7 = rs.getString("nuoc_san_xuat");
                         txt_nuocsanxuat.setText(value7);
                         String value8 = rs.getString("han_dung");
-                        ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+        //               ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
                         String value9 = rs.getString("ngay_sx");
-                        ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+         //               ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
                         String value10 = rs.getString("ham_luong");
                         txt_hamluong.setText(value10);
                         String value11 = rs.getString("cong_dung");
@@ -791,9 +791,9 @@ private void UpdateTableMedicine() {
                         String value7 = rs.getString("nuoc_san_xuat");
                         txt_nuocsanxuat.setText(value7);
                         String value8 = rs.getString("han_dung");
-                        ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+        //                ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
                         String value9 = rs.getString("ngay_sx");
-                        ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+        //                ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
                         String value10 = rs.getString("ham_luong");
                         txt_hamluong.setText(value10);
                         String value11 = rs.getString("cong_dung");

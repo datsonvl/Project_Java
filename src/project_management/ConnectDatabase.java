@@ -13,9 +13,9 @@ import javax.swing.JOptionPane;
  *
  * @author Tran Dat
  */
-public class JavaConnect {
+public class ConnectDatabase {
  
-    public static Connection connecrDB(){
+    public static Connection ConnectDB(){
         try{
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection("jdbc:sqlite:E:\\workspace_netbeans\\Project\\Project_Java\\Signin.sqlite");

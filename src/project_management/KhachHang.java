@@ -5,9 +5,11 @@
  */
 package project_management;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -27,7 +29,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
      */
     public KhachHang() {
         initComponents();
-        conn = JavaConnect.connecrDB();
+        conn = ConnectDatabase.ConnectDB();
         updateTableKhachHang();
     }
 
@@ -53,9 +55,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroupTimKiem = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCongNo = new javax.swing.JTextField();
@@ -234,10 +234,13 @@ public class KhachHang extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(51, 0, 204))); // NOI18N
 
+        buttonGroupTimKiem.add(jRadioButtonTenKhachHang);
         jRadioButtonTenKhachHang.setText("Tên khách hàng");
 
+        buttonGroupTimKiem.add(jRadioButtonMaKhachHang);
         jRadioButtonMaKhachHang.setText("Mã khách hàng");
 
+        buttonGroupTimKiem.add(jRadioButtonSoDienThoai);
         jRadioButtonSoDienThoai.setText("Số điện thoại");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -267,7 +270,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sắp xếp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(51, 0, 255))); // NOI18N
 
-        jComboBoxSapXep.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chọn", "Theo thứ tự", "Theo mã khách hàng", "Theo tên khách hàng", " " }));
+        jComboBoxSapXep.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chọn", "Thứ tự", "Mã khách hàng", "Tên khách hàng", " " }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -337,7 +340,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
-       /*  try{
+        try{
             
              String sql ="Insert into TableKhachHang(STT,MaKhachHang,TenKhachHang,DiaChi,SoDienThoai,CongNo) values (?,?,?,?,?,?)";
       
@@ -359,11 +362,11 @@ public class KhachHang extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
         updateTableKhachHang();
-        */
+        
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void jTableKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableKhachHangMouseClicked
-        /*try{
+        try{
             int row = jTableKhachHang.getSelectedRow();
             String tableClick = (jTableKhachHang.getModel().getValueAt(row, 0).toString());
             String sql = "Select * from TableKhachHang where STT='"+tableClick+"' ";
@@ -391,11 +394,11 @@ public class KhachHang extends javax.swing.JInternalFrame {
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
-                */
+                
     }//GEN-LAST:event_jTableKhachHangMouseClicked
 
     private void btnSuaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKHActionPerformed
-      /*  try{
+        try{
            
             String value0 = txtSTTKH.getText();
             String value1 = txtMaKhachHang.getText();
@@ -411,15 +414,15 @@ public class KhachHang extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Sửa thành công");
             
         
-        }catch(Exception e){
+        }catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, e);
         }
         updateTableKhachHang();
-              */
+              
     }//GEN-LAST:event_btnSuaKHActionPerformed
 
     private void btnXoaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKHActionPerformed
-      /*   int p = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa", "Xóa", JOptionPane.YES_NO_OPTION);
+        int p = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa", "Xóa", JOptionPane.YES_NO_OPTION);
         if(p==0){
         String sql = "delete from TableKhachHang where STT =?";
         try{
@@ -434,11 +437,11 @@ public class KhachHang extends javax.swing.JInternalFrame {
         }
         updateTableKhachHang();
     }    
-              */
+              
     }//GEN-LAST:event_btnXoaKHActionPerformed
 
     private void btnInKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInKHActionPerformed
-      /*
+      
         MessageFormat header = new MessageFormat("Danh sách khách hang");
         MessageFormat footer = new MessageFormat("Pase{0,number,integer}");
         
@@ -447,7 +450,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
         }catch(Exception e){
             System.err.format("Không thể in %s%n", e.getMessage());
         }
-              */
+              
     }//GEN-LAST:event_btnInKHActionPerformed
 
 
@@ -456,9 +459,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSuaKH;
     private javax.swing.JButton btnThemKH;
     private javax.swing.JButton btnXoaKH;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroupTimKiem;
     private javax.swing.JComboBox jComboBoxSapXep;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

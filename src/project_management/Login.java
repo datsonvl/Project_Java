@@ -27,7 +27,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        conn = JavaConnect.connecrDB();
+        conn = ConnectDatabase.ConnectDB();
     }
     
      public void closeWindownLogin() {

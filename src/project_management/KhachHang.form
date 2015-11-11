@@ -2,11 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup3">
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupTimKiem">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -384,11 +380,17 @@
       <SubComponents>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonTenKhachHang">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupTimKiem"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonMaKhachHang">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupTimKiem"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="M&#xe3; kh&#xe1;ch h&#xe0;ng"/>
           </Properties>
         </Component>
@@ -396,6 +398,9 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonSoDienThoai">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupTimKiem"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
           </Properties>
         </Component>
@@ -439,9 +444,9 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="5">
                 <StringItem index="0" value="Ch&#x1ecd;n"/>
-                <StringItem index="1" value="Theo th&#x1ee9; t&#x1ef1;"/>
-                <StringItem index="2" value="Theo m&#xe3; kh&#xe1;ch h&#xe0;ng"/>
-                <StringItem index="3" value="Theo t&#xea;n kh&#xe1;ch h&#xe0;ng"/>
+                <StringItem index="1" value="Th&#x1ee9; t&#x1ef1;"/>
+                <StringItem index="2" value="M&#xe3; kh&#xe1;ch h&#xe0;ng"/>
+                <StringItem index="3" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
                 <StringItem index="4" value=" "/>
               </StringArray>
             </Property>

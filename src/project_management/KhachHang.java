@@ -5,6 +5,7 @@
  */
 package project_management;
 
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -240,6 +241,12 @@ public class KhachHang extends javax.swing.JInternalFrame {
         buttonGroupTimKiem.add(jRadioButtonMaKhachHang);
         jRadioButtonMaKhachHang.setText("Mã khách hàng");
 
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
         buttonGroupTimKiem.add(jRadioButtonSoDienThoai);
         jRadioButtonSoDienThoai.setText("Số điện thoại");
 
@@ -270,16 +277,21 @@ public class KhachHang extends javax.swing.JInternalFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sắp xếp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(51, 0, 255))); // NOI18N
 
-        jComboBoxSapXep.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chọn", "Thứ tự", "Mã khách hàng", "Tên khách hàng", " " }));
+        jComboBoxSapXep.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chọn", "Thứ tự giảm dần", "Mã khách hàng", "Tên khách hàng", " " }));
+        jComboBoxSapXep.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxSapXepItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBoxSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBoxSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,25 +307,22 @@ public class KhachHang extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(jLabel7)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(193, 193, 193)
-                                .addComponent(jLabel7)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
-                                .addContainerGap())))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -452,6 +461,74 @@ public class KhachHang extends javax.swing.JInternalFrame {
         }
               
     }//GEN-LAST:event_btnInKHActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        TextAutoCompleter autoSeach = new TextAutoCompleter(txtTimKiem);
+        String sql=null;
+         
+        if(jRadioButtonMaKhachHang.isSelected()){
+            sql = "select * from TableKhachHang where MaKhachHang=?";
+          
+        }
+        if(jRadioButtonTenKhachHang.isSelected()){
+            sql = "select * from TableKhachHang where TenKhachHang=?";
+        }
+        if(jRadioButtonSoDienThoai.isSelected()){
+            sql = "select * from TableKhachHang where SoDienThoai=?";
+        }
+       
+         try{
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txtTimKiem.getText());
+            rs = pst.executeQuery();
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "Khách hàng cần tìm là :");
+                String add0 = rs.getString("STT");
+                txtSTTKH.setText(add0);
+                String add1 = rs.getString("MaKhachHang");
+                txtMaKhachHang.setText(add1);
+                String add2 = rs.getString("TenKhachHang");
+                txtTenKhachHang.setText(add2);
+                
+                String add3 = rs.getString("DiaChi");
+                txtDiachi.setText(add3);
+                String add4 = rs.getString("SoDienThoai");
+                txtSDT.setText(add4);
+                
+                String add5 = rs.getString("CongNo");
+                txtCongNo.setText(add5);
+                
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void jComboBoxSapXepItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxSapXepItemStateChanged
+        String sql="";
+        int index = jComboBoxSapXep.getSelectedIndex();
+        if(index == 0){
+            sql="select * from TableKhachHang order by STT DESC";
+        }
+        if(index == 1){
+            sql ="select * from TableKhachHang order by STT";
+        }
+        if(index == 2){
+            sql ="select * from TableKhachHang order by MaKhachHang";
+        }
+        if(index == 3){
+            sql ="select * from TableKhachHang order by TenKhachHang";
+        }
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jTableKhachHang.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+    }//GEN-LAST:event_jComboBoxSapXepItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

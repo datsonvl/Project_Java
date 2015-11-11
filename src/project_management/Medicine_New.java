@@ -32,7 +32,6 @@ public class Medicine_New extends javax.swing.JInternalFrame {
      */
     public Medicine_New() {
         initComponents();
-         //conn = ConnectDatabase.ConnectDB();   
         conn = ConnectDatabase.ConnectDB();
         UpdateTableMedicine();
         AutoCompleteThuoc();
@@ -107,6 +106,8 @@ private void UpdateTableMedicine() {
         txt_hamluong = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txt_congdung = new javax.swing.JTextField();
+        jDateChooserHanSuDung = new com.toedter.calendar.JDateChooser();
+        jDateChooserNgaySanXuat = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblist = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -207,7 +208,9 @@ private void UpdateTableMedicine() {
                     .addComponent(txt_nuocsanxuat)
                     .addComponent(txt_mathuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                     .addComponent(txt_hamluong)
-                    .addComponent(txt_congdung))
+                    .addComponent(txt_congdung)
+                    .addComponent(jDateChooserHanSuDung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jDateChooserNgaySanXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -242,10 +245,14 @@ private void UpdateTableMedicine() {
                     .addComponent(jLabel8)
                     .addComponent(txt_nuocsanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jLabel9)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel10)
-                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jDateChooserHanSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jDateChooserNgaySanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel11)
                     .addComponent(txt_hamluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -453,8 +460,8 @@ private void UpdateTableMedicine() {
             pst.setString(5, txt_soluong.getText());
             pst.setString(6, txt_dongia.getText());
             pst.setString(7, txt_nuocsanxuat.getText());
-          //  pst.setString(8, ((JTextField) jdate_hansudung.getDateEditor().getUiComponent()).getText());                   
-         //   pst.setString(9, ((JTextField) jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText());
+            pst.setString(8, ((JTextField) jDateChooserHanSuDung.getDateEditor().getUiComponent()).getText());                   
+            pst.setString(9, ((JTextField) jDateChooserNgaySanXuat.getDateEditor().getUiComponent()).getText());
             pst.setString(10, txt_hamluong.getText());
             pst.setString(11, txt_congdung.getText());
             pst.setString(12, datetime);
@@ -474,8 +481,6 @@ private void UpdateTableMedicine() {
             int day = cal.get(Calendar.DAY_OF_MONTH);         
             String datetime = day+"/"+(month+1)+"/"+year;
          try{
-           // 
-           // 
             String value0 = txt_mathuoc.getText();
             String value1 = txt_tenthuoc.getText();
             String value2 = txt_tenloaithuoc.getText();
@@ -483,19 +488,19 @@ private void UpdateTableMedicine() {
             String value4 = txt_soluong.getText();
             String value5 = txt_dongia.getText();
             String value6 = txt_nuocsanxuat.getText();
-      //      String value7 = ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).getText();
-    ////        String value8 = ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).getText();
+            String value7 = ((JTextField)jDateChooserHanSuDung.getDateEditor().getUiComponent()).getText();
+            String value8 = ((JTextField)jDateChooserNgaySanXuat.getDateEditor().getUiComponent()).getText();
             String value9 = txt_hamluong.getText();
             String value10 = txt_congdung.getText();
             String value11 = datetime;
-       //     String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"',Time_enter='"+value11+"' where ma_thuoc='"+value0+"' ";
+            String sql = "update Medicine set ma_thuoc='"+value0+"',ten_thuoc='"+value1+"',loai_thuoc='"+value2+"',nha_san_xuat='"+value3+"',so_luong='"+value4+"',don_gia='"+value5+"',nuoc_san_xuat='"+value6+"',han_dung='"+value7+"',ngay_sx='"+value8+"',ham_luong='"+value9+"',cong_dung='"+value10+"',Time_enter='"+value11+"' where ma_thuoc='"+value0+"' ";
             
-         //   pst = conn.prepareStatement(sql);
+            pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update success");
             
         
-        }catch(Exception e){
+        }catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, e);
         }
         UpdateTableMedicine();
@@ -588,9 +593,9 @@ private void UpdateTableMedicine() {
                         String value7 = rs.getString("nuoc_san_xuat");
                         txt_nuocsanxuat.setText(value7);
                         String value8 = rs.getString("han_dung");
-         //               ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+                        ((JTextField)jDateChooserHanSuDung.getDateEditor().getUiComponent()).setText(value8);
                         String value9 = rs.getString("ngay_sx");
-        //                ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+                        ((JTextField)jDateChooserNgaySanXuat.getDateEditor().getUiComponent()).setText(value9);
                         String value10 = rs.getString("ham_luong");
                         txt_hamluong.setText(value10);
                         String value11 = rs.getString("cong_dung");
@@ -631,9 +636,9 @@ private void UpdateTableMedicine() {
                         String value7 = rs.getString("nuoc_san_xuat");
                         txt_nuocsanxuat.setText(value7);
                         String value8 = rs.getString("han_dung");
-        //               ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+                       ((JTextField)jDateChooserHanSuDung.getDateEditor().getUiComponent()).setText(value8);
                         String value9 = rs.getString("ngay_sx");
-         //               ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+                        ((JTextField)jDateChooserNgaySanXuat.getDateEditor().getUiComponent()).setText(value9);
                         String value10 = rs.getString("ham_luong");
                         txt_hamluong.setText(value10);
                         String value11 = rs.getString("cong_dung");
@@ -791,9 +796,9 @@ private void UpdateTableMedicine() {
                         String value7 = rs.getString("nuoc_san_xuat");
                         txt_nuocsanxuat.setText(value7);
                         String value8 = rs.getString("han_dung");
-        //                ((JTextField)jdate_hansudung.getDateEditor().getUiComponent()).setText(value8);
+                        ((JTextField)jDateChooserHanSuDung.getDateEditor().getUiComponent()).setText(value8);
                         String value9 = rs.getString("ngay_sx");
-        //                ((JTextField)jdate_ngaysanxuat.getDateEditor().getUiComponent()).setText(value9);
+                       ((JTextField)jDateChooserNgaySanXuat.getDateEditor().getUiComponent()).setText(value9);
                         String value10 = rs.getString("ham_luong");
                         txt_hamluong.setText(value10);
                         String value11 = rs.getString("cong_dung");
@@ -830,7 +835,7 @@ private void UpdateTableMedicine() {
             pst.execute();           
             JOptionPane.showMessageDialog(null, "Deleted!");
             UpdateTableMedicine();
-        }catch(Exception e)
+        }catch(SQLException | HeadlessException e)
         {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -838,6 +843,8 @@ private void UpdateTableMedicine() {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser jDateChooserHanSuDung;
+    private com.toedter.calendar.JDateChooser jDateChooserNgaySanXuat;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

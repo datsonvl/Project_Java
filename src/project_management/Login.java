@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
     static String useNameLogin;
+    static String passWordLogin;
 
     Connection conn = null;
     ResultSet rs = null;
@@ -145,6 +146,7 @@ public class Login extends javax.swing.JFrame {
             if (rs.next()) {
                 JOptionPane.showMessageDialog(null, "Username and Password is correct");
                 useNameLogin = txt_usename.getText();
+                passWordLogin = txt_password.getText();
                 rs.close();
                 pst.close(); 
                 

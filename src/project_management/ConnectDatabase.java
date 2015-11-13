@@ -5,8 +5,10 @@
  */
 package project_management;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,10 +20,10 @@ public class ConnectDatabase {
     public static Connection ConnectDB(){
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:E:\\workspace_netbeans\\Project\\Project_Java\\Signin.sqlite");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:src\\database\\Signin.sqlite");
             JOptionPane.showMessageDialog(null, "Connection Established");
             return conn;
-        }catch(Exception e){
+        }catch(ClassNotFoundException | SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, e);
             return null;
         

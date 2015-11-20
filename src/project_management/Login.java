@@ -5,11 +5,13 @@
  */
 package project_management;
 
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -132,11 +134,12 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // TODO add your handling code here:
-        String sql = "select * from Admin where Name=? and Password=?";
+        String sql = "select * from Login where Username=? and Password=?";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, txt_usename.getText());
@@ -150,13 +153,13 @@ public class Login extends javax.swing.JFrame {
                 rs.close();
                 pst.close(); 
                 
-                Medicine s = new Medicine();
+                MainActivity s = new MainActivity();
                 s.setVisible(true);
                 closeWindownLogin();
             } else {
                 JOptionPane.showMessageDialog(null, "Username and Password is not correct");
             }
-        } catch (Exception e) {
+        } catch (SQLException | HeadlessException e) {
             JOptionPane.showMessageDialog(null, e);
 
         }
@@ -193,8 +196,6 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -71,14 +71,14 @@ public class MainActivity extends JFrame {
         thuoc = new Medicine_New();
         thuoc.setVisible(true);
         jDestopTable.add(thuoc);
-        
-        khachHang = new KhachHang();
-        khachHang.setVisible(true);
-        jDestopTable.add(khachHang);
-        
+     
         hoaDonNhap = new HoaDonNhap();
         hoaDonNhap.setVisible(true);
         jDestopTable.add(hoaDonNhap);
+       
+        khachHang = new KhachHang();
+        khachHang.setVisible(true);
+        jDestopTable.add(khachHang);
         
         hoaDonXuat = new HoaDonXuat();
         hoaDonXuat.setVisible(true);
@@ -87,6 +87,7 @@ public class MainActivity extends JFrame {
         taiKhoan = new TaiKhoan();
         taiKhoan.setVisible(true);
         jDestopTable.add(taiKhoan);
+    
     }
     //close windown login
     public void closeWindownMainActivity() {
@@ -161,7 +162,7 @@ public class MainActivity extends JFrame {
 
         jLabel2.setText("Tài khoản :");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/user-group.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User-32x32.png"))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel6.setText("Đăng xuất");
@@ -204,9 +205,9 @@ public class MainActivity extends JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(labelUseName, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(labelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -214,14 +215,12 @@ public class MainActivity extends JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelTime, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6))
         );
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/banner.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/banner.png"))); // NOI18N
 
         javax.swing.GroupLayout jDestopTableLayout = new javax.swing.GroupLayout(jDestopTable);
         jDestopTable.setLayout(jDestopTableLayout);
@@ -231,7 +230,7 @@ public class MainActivity extends JFrame {
         );
         jDestopTableLayout.setVerticalGroup(
             jDestopTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+            .addGap(0, 522, Short.MAX_VALUE)
         );
 
         jMenuThuoc.setText("Thuốc");
@@ -324,14 +323,12 @@ public class MainActivity extends JFrame {
     }//GEN-LAST:event_jMenuKhachHangMouseClicked
     
     private void jMenuHoaDonNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHoaDonNhapMouseClicked
-        // TODO add your handling code here:
-        //closeWindown();
+   
         if(hoaDonNhap == null){
             hoaDonNhap = new HoaDonNhap();
-            
             hoaDonNhap.setVisible(true);
             jDestopTable.add(hoaDonNhap);
-           // khachHang.setVisible(false);
+          
         }else {
             hoaDonNhap.setVisible(true);
             hoaDonXuat.setVisible(false);

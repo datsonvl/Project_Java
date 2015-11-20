@@ -7,6 +7,7 @@ package project_management;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+
     /**
      * Creates new form tableEmployer
      */
@@ -36,44 +38,45 @@ public class KhachHang extends javax.swing.JInternalFrame {
     }
 
     //auto complete text field seach
-    public void autoCompleteTFSeach(){
+    public void autoCompleteTFSeach() {
         TextAutoCompleter autoSeach = new TextAutoCompleter(txtTimKiem);
-        
-        try{
-            String sql ="Select * from TableKhachHang";
+
+        try {
+            String sql = "Select * from TableKhachHang";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            
+
             while (rs.next()) {
-                
-                    String maKhachHang = rs.getString("MaKhachHang");
-                    autoSeach.addItem(maKhachHang);
-              
-                    String tenKhachHang = rs.getString("TenKhachHang");
-                    autoSeach.addItem(tenKhachHang);
-               
-                    String sdt = rs.getString("SoDienThoai");
-                    autoSeach.addItem(sdt);
-              
+
+                String maKhachHang = rs.getString("MaKhachHang");
+                autoSeach.addItem(maKhachHang);
+
+                String tenKhachHang = rs.getString("TenKhachHang");
+                autoSeach.addItem(tenKhachHang);
+
+                String sdt = rs.getString("SoDienThoai");
+                autoSeach.addItem(sdt);
+
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
 
     }
+
     private void updateTableKhachHang() {
-    
-        String sql ="select * from TableKhachHang";
-        try{
-        pst= conn.prepareStatement(sql);
-        rs = pst.executeQuery();
-        jTableKhachHang.setModel(DbUtils.resultSetToTableModel(rs));
-        }
-        catch(Exception e){
+
+        String sql = "select * from TableKhachHang";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTableKhachHang.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -252,6 +255,11 @@ public class KhachHang extends javax.swing.JInternalFrame {
                 jTableKhachHangMouseClicked(evt);
             }
         });
+        jTableKhachHang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTableKhachHangKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableKhachHang);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -374,139 +382,136 @@ public class KhachHang extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
-        try{
-            
-             String sql ="Insert into TableKhachHang(STT,MaKhachHang,TenKhachHang,DiaChi,SoDienThoai,CongNo) values (?,?,?,?,?,?)";
-      
-             pst = conn.prepareStatement(sql);
-             pst.setString(1, txtSTTKH.getText());
-             
-             pst.setString(2, txtMaKhachHang.getText());
-             pst.setString(3, txtTenKhachHang.getText());
-             
-             pst.setString(4, txtDiachi.getText());
-             pst.setString(5, txtSDT.getText());
-             
-             pst.setString(6, txtCongNo.getText());
-             
-             pst.execute();
-             JOptionPane.showMessageDialog(null, "Lưu thành công");
-             
-        }catch(SQLException | HeadlessException e){
+        try {
+
+            String sql = "Insert into TableKhachHang(STT,MaKhachHang,TenKhachHang,DiaChi,SoDienThoai,CongNo) values (?,?,?,?,?,?)";
+
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txtSTTKH.getText());
+
+            pst.setString(2, txtMaKhachHang.getText());
+            pst.setString(3, txtTenKhachHang.getText());
+
+            pst.setString(4, txtDiachi.getText());
+            pst.setString(5, txtSDT.getText());
+
+            pst.setString(6, txtCongNo.getText());
+
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Lưu thành công");
+
+        } catch (SQLException | HeadlessException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         updateTableKhachHang();
-        
+
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void jTableKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableKhachHangMouseClicked
-        try{
+        try {
             int row = jTableKhachHang.getSelectedRow();
             String tableClick = (jTableKhachHang.getModel().getValueAt(row, 0).toString());
-            String sql = "Select * from TableKhachHang where STT='"+tableClick+"' ";
-            pst= conn.prepareStatement(sql);
+            String sql = "Select * from TableKhachHang where STT='" + tableClick + "' ";
+            pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 String add0 = rs.getString("STT");
                 txtSTTKH.setText(add0);
                 String add1 = rs.getString("MaKhachHang");
                 txtMaKhachHang.setText(add1);
                 String add2 = rs.getString("TenKhachHang");
                 txtTenKhachHang.setText(add2);
-                
+
                 String add3 = rs.getString("DiaChi");
                 txtDiachi.setText(add3);
                 String add4 = rs.getString("SoDienThoai");
                 txtSDT.setText(add4);
-                
+
                 String add5 = rs.getString("CongNo");
                 txtCongNo.setText(add5);
-                
+
             }
-        
-        }
-        catch(Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-                
+
     }//GEN-LAST:event_jTableKhachHangMouseClicked
 
     private void btnSuaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKHActionPerformed
-        try{
-           
+        try {
+
             String value0 = txtSTTKH.getText();
             String value1 = txtMaKhachHang.getText();
             String value2 = txtTenKhachHang.getText();
             String value3 = txtDiachi.getText();
             String value4 = txtSDT.getText();
             String value5 = txtCongNo.getText();
-            
-            String sql = "update TableKhachHang set STT='"+value0+"',MaKhachHang='"+value1+"',TenKhachHang='"+value2+"',DiaChi='"+value3+"',SoDienThoai='"+value4+"',CongNo='"+value5+"' where STT='"+value0+"' ";
-            
+
+            String sql = "update TableKhachHang set STT='" + value0 + "',MaKhachHang='" + value1 + "',TenKhachHang='" + value2 + "',DiaChi='" + value3 + "',SoDienThoai='" + value4 + "',CongNo='" + value5 + "' where STT='" + value0 + "' ";
+
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Sửa thành công");
-            
-        
-        }catch(SQLException | HeadlessException e){
+
+        } catch (SQLException | HeadlessException e) {
             JOptionPane.showMessageDialog(null, e);
         }
         updateTableKhachHang();
-          
+
     }//GEN-LAST:event_btnSuaKHActionPerformed
 
     private void btnXoaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKHActionPerformed
-         int p = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa", "Xóa", JOptionPane.YES_NO_OPTION);
-        if(p==0){
-        String sql = "delete from TableKhachHang where STT =?";
-        try{
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, txtSTTKH.getText());
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Xóa thành công");
-        
+        int p = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa", "Xóa", JOptionPane.YES_NO_OPTION);
+        if (p == 0) {
+            String sql = "delete from TableKhachHang where STT =?";
+            try {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, txtSTTKH.getText());
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            updateTableKhachHang();
         }
-        catch(SQLException | HeadlessException e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        updateTableKhachHang();
-    }    
-         
+
     }//GEN-LAST:event_btnXoaKHActionPerformed
 
     private void btnInKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInKHActionPerformed
-     
+
         MessageFormat header = new MessageFormat("Danh sách khách hang");
         MessageFormat footer = new MessageFormat("Pase{0,number,integer}");
-        
-        try{
-            jTableKhachHang.print(JTable.PrintMode.NORMAL,header,footer);
-        }catch(Exception e){
+
+        try {
+            jTableKhachHang.print(JTable.PrintMode.NORMAL, header, footer);
+        } catch (Exception e) {
             System.err.format("Không thể in %s%n", e.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnInKHActionPerformed
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         TextAutoCompleter autoSeach = new TextAutoCompleter(txtTimKiem);
-        String sql=null;
-         
-        if(jRadioButtonMaKhachHang.isSelected()){
+        String sql = null;
+
+        if (jRadioButtonMaKhachHang.isSelected()) {
             sql = "select * from TableKhachHang where MaKhachHang=?";
-          
+
         }
-        if(jRadioButtonTenKhachHang.isSelected()){
+        if (jRadioButtonTenKhachHang.isSelected()) {
             sql = "select * from TableKhachHang where TenKhachHang=?";
         }
-        if(jRadioButtonSDT.isSelected()){
+        if (jRadioButtonSDT.isSelected()) {
             sql = "select * from TableKhachHang where SoDienThoai=?";
         }
-       
-         try{
+
+        try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, txtTimKiem.getText());
             rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 JOptionPane.showMessageDialog(null, "Khách hàng cần tìm là :");
                 String add0 = rs.getString("STT");
                 txtSTTKH.setText(add0);
@@ -514,50 +519,81 @@ public class KhachHang extends javax.swing.JInternalFrame {
                 txtMaKhachHang.setText(add1);
                 String add2 = rs.getString("TenKhachHang");
                 txtTenKhachHang.setText(add2);
-                
+
                 String add3 = rs.getString("DiaChi");
                 txtDiachi.setText(add3);
                 String add4 = rs.getString("SoDienThoai");
                 txtSDT.setText(add4);
-                
+
                 String add5 = rs.getString("CongNo");
                 txtCongNo.setText(add5);
-                
+
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void jComboBoxSapXepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSapXepActionPerformed
-       // int index = jComboBoxSapXep.
+        // int index = jComboBoxSapXep.
     }//GEN-LAST:event_jComboBoxSapXepActionPerformed
 
     private void jComboBoxSapXepItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxSapXepItemStateChanged
-        String sql="select * from TableKhachHang order by STT";
+        String sql = "select * from TableKhachHang order by STT";
         int index = jComboBoxSapXep.getSelectedIndex();
-        if(index == 0){
+        if (index == 0) {
             //JOptionPane.showMessageDialog(null, "Chọn cách sắp xếp");
         }
-        if(index == 1){
-            sql ="select * from TableKhachHang order by STT";
+        if (index == 1) {
+            sql = "select * from TableKhachHang order by STT";
         }
-        if(index == 2){
-            sql ="select * from TableKhachHang order by MaKhachHang";
+        if (index == 2) {
+            sql = "select * from TableKhachHang order by MaKhachHang";
         }
-        if(index == 3){
-            sql ="select * from TableKhachHang order by TenKhachHang";
+        if (index == 3) {
+            sql = "select * from TableKhachHang order by TenKhachHang";
         }
-        try{
-        pst= conn.prepareStatement(sql);
-        rs = pst.executeQuery();
-        jTableKhachHang.setModel(DbUtils.resultSetToTableModel(rs));
-        }
-        catch(Exception e){
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTableKhachHang.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
     }//GEN-LAST:event_jComboBoxSapXepItemStateChanged
+
+    private void jTableKhachHangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableKhachHangKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP) {
+            try {
+                int row = jTableKhachHang.getSelectedRow();
+                String tableClick = (jTableKhachHang.getModel().getValueAt(row, 0).toString());
+                String sql = "Select * from TableKhachHang where STT='" + tableClick + "' ";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    String add0 = rs.getString("STT");
+                    txtSTTKH.setText(add0);
+                    String add1 = rs.getString("MaKhachHang");
+                    txtMaKhachHang.setText(add1);
+                    String add2 = rs.getString("TenKhachHang");
+                    txtTenKhachHang.setText(add2);
+
+                    String add3 = rs.getString("DiaChi");
+                    txtDiachi.setText(add3);
+                    String add4 = rs.getString("SoDienThoai");
+                    txtSDT.setText(add4);
+
+                    String add5 = rs.getString("CongNo");
+                    txtCongNo.setText(add5);
+
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_jTableKhachHangKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

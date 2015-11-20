@@ -18,7 +18,7 @@ public class ConnectDatabase {
         try{
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection("jdbc:sqlite:E:\\workspace_netbeans\\sqlite\\QuanLyHieuThuoc.sqlite");
-            JOptionPane.showMessageDialog(null, "Connection Established");
+          //  JOptionPane.showMessageDialog(null, "Connection Established");
             return conn;
         }catch(ClassNotFoundException | SQLException e){
             JOptionPane.showMessageDialog(null, e);

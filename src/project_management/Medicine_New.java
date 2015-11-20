@@ -7,6 +7,7 @@ package project_management;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +35,7 @@ public class Medicine_New extends javax.swing.JInternalFrame {
         initComponents();
         conn = ConnectDatabase.ConnectDB();
         UpdateTableMedicine();
-        AutoCompleteThuoc();
+      
     }
     // Auto completer some text field in medicine
      public final void AutoCompleteThuoc(){
@@ -140,17 +141,41 @@ private void UpdateTableMedicine() {
 
         jLabel2.setText("Mã thuốc");
 
+        txt_mathuoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_mathuocKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Tên thuốc");
+
+        txt_tenthuoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_tenthuocKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("Tên loại thuốc");
 
         jLabel5.setText("Tên nhà cung cấp ");
+
+        txt_tennhacungcap.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_tennhacungcapKeyReleased(evt);
+            }
+        });
 
         jLabel6.setText("Số lượng ");
 
         jLabel7.setText("Đơn giá");
 
         jLabel8.setText("Nước sản xuất");
+
+        txt_nuocsanxuat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_nuocsanxuatKeyReleased(evt);
+            }
+        });
 
         jLabel9.setText("Hạn sử dụng");
 
@@ -277,6 +302,11 @@ private void UpdateTableMedicine() {
         jtblist.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtblistMouseClicked(evt);
+            }
+        });
+        jtblist.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtblistKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jtblist);
@@ -840,6 +870,121 @@ private void UpdateTableMedicine() {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void txt_mathuocKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mathuocKeyReleased
+        TextAutoCompleter autoMaThuoc = new TextAutoCompleter(txt_mathuoc);
+    
+        try{
+            
+            String sql ="Select * from Medicine";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {                
+                String maThuoc = rs.getString("ma_thuoc");
+                autoMaThuoc.addItem(maThuoc);
+                String tenThuoc = rs.getString("ten_thuoc");
+            
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_txt_mathuocKeyReleased
+
+    private void txt_tenthuocKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tenthuocKeyReleased
+        TextAutoCompleter autoTenThuoc = new TextAutoCompleter(txt_tenthuoc);
+       
+        try{
+            
+            String sql ="Select * from Medicine";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {                
+                String tenThuoc = rs.getString("ten_thuoc");
+                autoTenThuoc.addItem(tenThuoc);
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_txt_tenthuocKeyReleased
+
+    private void txt_tennhacungcapKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tennhacungcapKeyReleased
+        TextAutoCompleter autoNhaCungCap = new TextAutoCompleter(txt_tennhacungcap);
+              
+        try{
+            
+            String sql ="Select * from Medicine";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {                
+                 String nhaCungCap = rs.getString("nha_san_xuat");
+                autoNhaCungCap.addItem(nhaCungCap);
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_txt_tennhacungcapKeyReleased
+
+    private void txt_nuocsanxuatKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nuocsanxuatKeyReleased
+        TextAutoCompleter autoNuocSanXuat = new TextAutoCompleter(txt_nuocsanxuat);
+        try{
+            String sql ="Select * from Medicine";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {                
+                String nuocSanXuat = rs.getString("nuoc_san_xuat");
+                autoNuocSanXuat.addItem(nuocSanXuat);
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_txt_nuocsanxuatKeyReleased
+
+    private void jtblistKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtblistKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP){
+            try{
+             
+            int row = jtblist.getSelectedRow();
+            String Table_click = (jtblist.getModel().getValueAt(row, 0)).toString();
+            String sql = "select * from Medicine where ma_thuoc='"+Table_click+"'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery(); 
+            if(rs.next())
+                    {
+                        String value1 = rs.getString("ma_thuoc");
+                        txt_mathuoc.setText(value1);
+                        String value2 = rs.getString("ten_thuoc");
+                        txt_tenthuoc.setText(value2);
+                        String value3 = rs.getString("loai_thuoc");
+                        txt_tenloaithuoc.setText(value3);
+                        String value4 = rs.getString("nha_san_xuat");
+                        txt_tennhacungcap.setText(value4);
+                        String value5 = rs.getString("so_luong");
+                        txt_soluong.setText(value5);
+                        String value6 = rs.getString("don_gia");
+                        txt_dongia.setText(value6);
+                        String value7 = rs.getString("nuoc_san_xuat");
+                        txt_nuocsanxuat.setText(value7);
+                        String value8 = rs.getString("han_dung");
+                        ((JTextField)jDateChooserHanSuDung.getDateEditor().getUiComponent()).setText(value8);
+                        String value9 = rs.getString("ngay_sx");
+                       ((JTextField)jDateChooserNgaySanXuat.getDateEditor().getUiComponent()).setText(value9);
+                        String value10 = rs.getString("ham_luong");
+                        txt_hamluong.setText(value10);
+                        String value11 = rs.getString("cong_dung");
+                        txt_congdung.setText(value11);  
+                        
+                    }  
+            //pst.close();
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        }
+    }//GEN-LAST:event_jtblistKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

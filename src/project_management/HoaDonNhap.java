@@ -5,10 +5,16 @@
  */
 package project_management;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import net.proteanit.sql.DbUtils;
 
@@ -80,7 +86,12 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jLabel1.setText("Mã hóa đơn:");
@@ -157,7 +168,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_mancc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jdate_ngaynhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -236,8 +247,49 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenu3.setText("Sắp xếp");
+
+        jMenuItem4.setText("Sắp xếp theo mã hóa đơn (mặc định)");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuItem5.setText("Sắp xếp theo mã số thuốc");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
+
+        jMenuItem6.setText("Sắp xếp theo ngày nhập");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
+
+        jMenu1.add(jMenu3);
+
         jMenuItem3.setText("Xóa");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem7.setText("In hóa đơn");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem7);
 
         jMenuBar1.add(jMenu1);
 
@@ -354,7 +406,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
             String value9 = txt_nhanviengiao.getText();
             String value10 = txt_nhanviennhan.getText();
             String value11 = txt_conlai.getText();
-            String sql = "update HoaDonNhap set Mahoadon='"+value0+"',MaNCC='"+value1+"',NgayNhap='"+value2+"',GiaNhap='"+value3+"',Soluong='"+value4+"',Mathuco='"+value5+"',ThanhTien='"+value6+"',DonViTinh='"+value7+"',DaThanhToan='"+value8+"',NvGiao='"+value9+"',NvNhan='"+value10+"',Conlai='"+value11+"' where Mahoadon='"+value0+"' ";
+            String sql = "update HoaDonNhap set Mahoadon='"+value0+"',MaNCC='"+value1+"',NgayNhap='"+value2+"',GiaNhap='"+value3+"',Soluong='"+value4+"',Mathuoc='"+value5+"',ThanhTien='"+value6+"',DonViTinh='"+value7+"',DaThanhToan='"+value8+"',NvGiao='"+value9+"',NvNhan='"+value10+"',Conlai='"+value11+"' where Mahoadon='"+value0+"' ";
             
             pst = conn.prepareStatement(sql);
             pst.execute();
@@ -366,6 +418,76 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
         }
         UpdateTableHoaDonNhap();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+         try{
+                   
+            String sql = "delete from HoaDonNhap where Mahoadon=?";
+          
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txt_mathuoc.getText());
+            pst.execute();           
+            JOptionPane.showMessageDialog(null, "Deleted!");
+            UpdateTableHoaDonNhap();
+        }catch(SQLException | HeadlessException e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+           String sql;
+        sql = "select * from HoaDonNhap order by Mahoadon asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtb_hoadonnhap.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+          String sql;
+        sql = "select * from HoaDonNhap order by Mathuoc asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtb_hoadonnhap.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+            String sql;
+        sql = "select * from HoaDonNhap order by NgayNhap asc";
+        try{
+        pst= conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        jtb_hoadonnhap.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Calendar cal = new GregorianCalendar();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);  
+        MessageFormat header = new MessageFormat("Hoa_Don_Nhap"+" "+day+"/"+month+"/"+year);
+        MessageFormat footer = new MessageFormat("Pase{0,number,integer}");
+        
+        try{
+            jtb_hoadonnhap.print(JTable.PrintMode.NORMAL,header,footer);
+        }catch(Exception e){
+            System.err.format("Can not print %s%n", e.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,10 +505,15 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdate_ngaynhap;

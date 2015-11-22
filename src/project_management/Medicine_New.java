@@ -120,7 +120,6 @@ private void UpdateTableMedicine() {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -346,7 +345,7 @@ private void UpdateTableMedicine() {
 
         jMenu4.setText("Xóa");
 
-        jMenuItem5.setText("Xóa một loại thuốc");
+        jMenuItem5.setText("Xóa một loại thuốc đã chọn");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -354,10 +353,12 @@ private void UpdateTableMedicine() {
         });
         jMenu4.add(jMenuItem5);
 
-        jMenuItem6.setText("Xóa loại thuốc đã chọn");
-        jMenu4.add(jMenuItem6);
-
         jMenuItem7.setText("Xóa tất cả");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenu1.add(jMenu4);
@@ -986,6 +987,17 @@ private void UpdateTableMedicine() {
         }
     }//GEN-LAST:event_jtblistKeyPressed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try{
+        String sql = "delete from Medicine";
+        pst = conn.prepareStatement(sql);
+        pst.execute();
+        JOptionPane.showMessageDialog(null, "Deleted");
+        }catch(Exception e){
+        JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDateChooserHanSuDung;
@@ -1020,7 +1032,6 @@ private void UpdateTableMedicine() {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;

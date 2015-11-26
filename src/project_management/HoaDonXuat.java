@@ -5,9 +5,11 @@
  */
 package project_management;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import net.proteanit.sql.DbUtils;
@@ -117,7 +119,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel8)
@@ -131,7 +133,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_mahoadon, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                     .addComponent(txt_makh)
@@ -145,7 +147,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
                     .addComponent(txt_nhanviennhan)
                     .addComponent(txt_conlai)
                     .addComponent(jdate_ngayxuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_conlai, txt_dathanhtoan, txt_donvitinh, txt_giaxuat, txt_mahoadon, txt_makh, txt_mathuoc, txt_nhanviengiao, txt_nhanviennhan, txt_soluong, txt_thanhtien});
@@ -153,7 +155,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_mahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -201,7 +203,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txt_conlai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtb_hoadonxuat.setModel(new javax.swing.table.DefaultTableModel(
@@ -271,20 +273,20 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
 
@@ -293,7 +295,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
-            String sql = "Insert into HoaDonNhap (Mahoadon,MaKH,NgayXuat,GiaXuat,Soluong,Mathuoc,DonViTinh,ThanhTien,Ngayxuat,DaThanhToan,NvGiao,NvNhan,Conlai) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into HoaDonNhap (MaHoaDon,MaKH,NgayXuat,GiaXuat,SoLuong,Mathuoc,DonViTinh,ThanhTien,Ngayxuat,DaThanhToan,NvGiao,NvNhan,ConLai) values (?,?,?,?,?,?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setString(1, txt_mahoadon.getText());
             pst.setString(2, txt_makh.getText());
@@ -309,7 +311,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
             pst.setString(12, txt_conlai.getText());
             pst.execute();
             JOptionPane.showMessageDialog(null, "Added!!");
-            UpdateTableHoaDonNhap();
+            UpdateTableHoaDonXuat();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -325,7 +327,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
             rs = pst.executeQuery(); 
             if(rs.next())
                     {
-                        String value1 = rs.getString("Mahoadon");
+                        String value1 = rs.getString("MaHoaDon");
                         txt_mahoadon.setText(value1);
                         String value2 = rs.getString("MaKH");
                         txt_makh.setText(value2);
@@ -333,7 +335,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
                         ((JTextField)jdate_ngayxuat.getDateEditor().getUiComponent()).setText(value3);
                         String value4 = rs.getString("GiaXuat");
                         txt_giaxuat.setText(value4);
-                        String value5 = rs.getString("Soluong");
+                        String value5 = rs.getString("SoLuong");
                         txt_soluong.setText(value5);
                         String value6 = rs.getString("Mathuoc");
                         txt_mathuoc.setText(value6);
@@ -347,7 +349,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
                         txt_nhanviengiao.setText(value10);
                         String value11 = rs.getString("NvNhan");
                         txt_nhanviennhan.setText(value11);  
-                        String value12 = rs.getString("Conlai");
+                        String value12 = rs.getString("ConLai");
                         txt_conlai.setText(value12);
                         
                     }  
@@ -360,28 +362,26 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         try{
-           // 
-           // 
             String value0 = txt_mahoadon.getText();
-            String value1 = txt_mancc.getText();
-            String value2 = ((JTextField)jdate_ngaynhap.getDateEditor().getUiComponent()).getText();
-            String value3 = txt_gianhap.getText();
+            String value1 = txt_makh.getText();
+            String value2 = ((JTextField)jdate_ngayxuat.getDateEditor().getUiComponent()).getText();
+            String value3 = txt_giaxuat.getText();
             String value4 = txt_soluong.getText();
             String value5 = txt_mathuoc.getText();
-            String value6 = txt_thanhtien.getText();
-            String value7 = txt_donvitinh.getText();
+            String value6 = txt_donvitinh.getText();     
+            String value7 = txt_thanhtien.getText();
             String value8 = txt_dathanhtoan.getText();
             String value9 = txt_nhanviengiao.getText();
             String value10 = txt_nhanviennhan.getText();
             String value11 = txt_conlai.getText();
-            String sql = "update HoaDonNhap set Mahoadon='"+value0+"',MaNCC='"+value1+"',NgayNhap='"+value2+"',GiaNhap='"+value3+"',Soluong='"+value4+"',Mathuoc='"+value5+"',ThanhTien='"+value6+"',DonViTinh='"+value7+"',DaThanhToan='"+value8+"',NvGiao='"+value9+"',NvNhan='"+value10+"',Conlai='"+value11+"' where Mahoadon='"+value0+"' ";
+            String sql = "update HoaDonNhap set MaHoaDon='"+value0+"',MaNCC='"+value1+"',NgayNhap='"+value2+"',GiaNhap='"+value3+"',SoLuong='"+value4+"',Mathuoc='"+value5+"',ThanhTien='"+value6+"',DonViTinh='"+value7+"',DaThanhToan='"+value8+"',NvGiao='"+value9+"',NvNhan='"+value10+"',ConLai='"+value11+"' where Mahoadon='"+value0+"' ";
             
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update success");
             
         
-        }catch(Exception e){
+        }catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, e);
         }
         UpdateTableHoaDonXuat();

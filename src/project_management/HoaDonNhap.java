@@ -123,7 +123,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel11)
@@ -152,7 +152,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
                     .addComponent(txt_nhanviennhan)
                     .addComponent(txt_conlai)
                     .addComponent(jdate_ngaynhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txt_conlai, txt_dathanhtoan, txt_donvitinh, txt_gianhap, txt_mahoadon, txt_mancc, txt_mathuoc, txt_nhanviengiao, txt_nhanviennhan, txt_soluong, txt_thanhtien});
@@ -308,7 +308,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
@@ -386,8 +386,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
                         txt_conlai.setText(value12);
                         
                     }  
-            //pst.close();
-        }catch(Exception e)
+            }catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -395,8 +394,6 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         try{
-           // 
-           // 
             String value0 = txt_mahoadon.getText();
             String value1 = txt_mancc.getText();
             String value2 = ((JTextField)jdate_ngaynhap.getDateEditor().getUiComponent()).getText();
@@ -416,7 +413,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Update success");
             
         
-        }catch(Exception e){
+        }catch(SQLException | HeadlessException e){
             JOptionPane.showMessageDialog(null, e);
         }
         UpdateTableHoaDonNhap();

@@ -301,7 +301,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
-            String sql = "Insert into HoaDonNhap (MaHoaDon,MaKH,NgayXuat,GiaXuat,SoLuong,Mathuoc,DonViTinh,ThanhTien,Ngayxuat,DaThanhToan,NvGiao,NvNhan,ConLai) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into HoaDonXuat (MaHoaDon,MaKH,NgayXuat,GiaXuat,SoLuong,Mathuoc,DonViTinh,ThanhTien,Ngayxuat,DaThanhToan,NvGiao,NvNhan,ConLai) values (?,?,?,?,?,?,?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setString(1, txt_mahoadon.getText());
             pst.setString(2, txt_makh.getText());
@@ -380,7 +380,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
             String value9 = txt_nhanviengiao.getText();
             String value10 = txt_nhanviennhan.getText();
             String value11 = txt_conlai.getText();
-            String sql = "update HoaDonNhap set MaHoaDon='"+value0+"',MaNCC='"+value1+"',NgayNhap='"+value2+"',GiaNhap='"+value3+"',SoLuong='"+value4+"',Mathuoc='"+value5+"',ThanhTien='"+value6+"',DonViTinh='"+value7+"',DaThanhToan='"+value8+"',NvGiao='"+value9+"',NvNhan='"+value10+"',ConLai='"+value11+"' where Mahoadon='"+value0+"' ";
+            String sql = "update HoaDonXuat set MaHoaDon='"+value0+"',MaNCC='"+value1+"',NgayNhap='"+value2+"',GiaNhap='"+value3+"',SoLuong='"+value4+"',Mathuoc='"+value5+"',ThanhTien='"+value6+"',DonViTinh='"+value7+"',DaThanhToan='"+value8+"',NvGiao='"+value9+"',NvNhan='"+value10+"',ConLai='"+value11+"' where Mahoadon='"+value0+"' ";
             
             pst = conn.prepareStatement(sql);
             pst.execute();
@@ -399,7 +399,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
              
             int row = jtb_hoadonxuat.getSelectedRow();
             String Table_click = (jtb_hoadonxuat.getModel().getValueAt(row, 0)).toString();
-            String sql = "select * from Medicine where ma_thuoc='"+Table_click+"'";
+            String sql = "select * from HoaDonXuat where ma_thuoc='"+Table_click+"'";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery(); 
             if(rs.next()){

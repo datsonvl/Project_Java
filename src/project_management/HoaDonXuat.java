@@ -6,6 +6,7 @@
 package project_management;
 
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -222,6 +223,11 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
                 jtb_hoadonxuatMouseClicked(evt);
             }
         });
+        jtb_hoadonxuat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtb_hoadonxuatKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtb_hoadonxuat);
 
         jMenu1.setText("Option");
@@ -386,6 +392,47 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
         }
         UpdateTableHoaDonXuat();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jtb_hoadonxuatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtb_hoadonxuatKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP){
+            try{
+             
+            int row = jtb_hoadonxuat.getSelectedRow();
+            String Table_click = (jtb_hoadonxuat.getModel().getValueAt(row, 0)).toString();
+            String sql = "select * from Medicine where ma_thuoc='"+Table_click+"'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery(); 
+            if(rs.next()){
+                    String value1 = rs.getString("MaHoaDon");
+                        txt_mahoadon.setText(value1);
+                        String value2 = rs.getString("MaKH");
+                        txt_makh.setText(value2);
+                        String value3 = rs.getString("NgayXuat");
+                        ((JTextField)jdate_ngayxuat.getDateEditor().getUiComponent()).setText(value3);
+                        String value4 = rs.getString("GiaXuat");
+                        txt_giaxuat.setText(value4);
+                        String value5 = rs.getString("SoLuong");
+                        txt_soluong.setText(value5);
+                        String value6 = rs.getString("Mathuoc");
+                        txt_mathuoc.setText(value6);
+                        String value7 = rs.getString("DonViTinh");
+                        txt_donvitinh.setText(value7);
+                        String value8 = rs.getString("ThanhTien");
+                        txt_thanhtien.setText(value8);
+                        String value9 = rs.getString("DaThanhToan");
+                        txt_dathanhtoan.setText(value9);
+                        String value10 = rs.getString("NvGiao");
+                        txt_nhanviengiao.setText(value10);
+                        String value11 = rs.getString("NvNhan");
+                        txt_nhanviennhan.setText(value11);  
+                        String value12 = rs.getString("ConLai");
+                        txt_conlai.setText(value12);
+            }
+            }catch(Exception e){
+                 JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_jtb_hoadonxuatKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -136,6 +136,9 @@ private void UpdateTableMedicine() {
         jMenu8 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
+        setBorder(null);
+        setTitle("Thuốc");
+
         jPanel2.setToolTipText("Thông tin thuốc");
 
         jLabel2.setText("Mã thuốc");
@@ -459,7 +462,7 @@ private void UpdateTableMedicine() {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

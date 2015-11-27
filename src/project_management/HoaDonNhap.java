@@ -94,6 +94,9 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
+        setBorder(null);
+        setTitle("Hóa Đơn Xuất");
+
         jLabel1.setText("Mã hóa đơn:");
 
         jLabel2.setText("Mã NCC:");
@@ -322,6 +325,8 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleName("Hóa Đơn Nhập");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

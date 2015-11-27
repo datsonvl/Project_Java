@@ -225,10 +225,12 @@ public class MainActivity extends JFrame {
         );
         jDestopTableLayout.setVerticalGroup(
             jDestopTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 523, Short.MAX_VALUE)
+            .addGap(0, 525, Short.MAX_VALUE)
         );
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/supplier-new.png"))); // NOI18N
+
+        jMenuBar1.setBorder(null);
 
         jMenuThuoc.setText("Thuốc");
         jMenuThuoc.addMouseListener(new java.awt.event.MouseAdapter() {

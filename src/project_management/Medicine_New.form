@@ -22,11 +22,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Thay &#x111;&#x1ed5;i th&#xf4;ng tin thu&#x1ed1;c"/>
-                  </Properties>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t th&#xf4;ng tin thu&#x1ed1;c"/>
@@ -284,8 +279,6 @@
                       <Component id="txt_mathuoc" alignment="0" pref="251" max="32767" attributes="0"/>
                       <Component id="txt_hamluong" alignment="0" max="32767" attributes="0"/>
                       <Component id="txt_congdung" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jDateChooserHanSuDung" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jDateChooserNgaySanXuat" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -330,16 +323,10 @@
                       <Component id="txt_nuocsanxuat" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <Component id="jDateChooserHanSuDung" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                      <Component id="jDateChooserNgaySanXuat" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabel11" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_hamluong" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -439,10 +426,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_congdung">
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserHanSuDung">
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserNgaySanXuat">
         </Component>
       </SubComponents>
     </Container>

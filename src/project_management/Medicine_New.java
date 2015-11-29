@@ -107,15 +107,12 @@ private void UpdateTableMedicine() {
         txt_hamluong = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txt_congdung = new javax.swing.JTextField();
-        jDateChooserHanSuDung = new com.toedter.calendar.JDateChooser();
-        jDateChooserNgaySanXuat = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblist = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -235,9 +232,7 @@ private void UpdateTableMedicine() {
                     .addComponent(txt_nuocsanxuat)
                     .addComponent(txt_mathuoc, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                     .addComponent(txt_hamluong)
-                    .addComponent(txt_congdung)
-                    .addComponent(jDateChooserHanSuDung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooserNgaySanXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txt_congdung))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -272,14 +267,10 @@ private void UpdateTableMedicine() {
                     .addComponent(jLabel8)
                     .addComponent(txt_nuocsanxuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jDateChooserHanSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jDateChooserNgaySanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addComponent(jLabel9)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel10)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel11)
                     .addComponent(txt_hamluong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -324,9 +315,6 @@ private void UpdateTableMedicine() {
             }
         });
         jMenu3.add(jMenuItem1);
-
-        jMenuItem2.setText("Thay đổi thông tin thuốc");
-        jMenu3.add(jMenuItem2);
 
         jMenuItem3.setText("Cập nhật thông tin thuốc");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -1003,8 +991,6 @@ private void UpdateTableMedicine() {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser jDateChooserHanSuDung;
-    private com.toedter.calendar.JDateChooser jDateChooserNgaySanXuat;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1031,7 +1017,6 @@ private void UpdateTableMedicine() {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

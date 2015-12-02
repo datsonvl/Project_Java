@@ -15,6 +15,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -40,6 +41,11 @@ public class GuiThongTin extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        txt_filegui = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txt_fileluu = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,23 +63,51 @@ public class GuiThongTin extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Xác nhận ");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Nhập Ip máy nhận:");
+
+        jLabel2.setText("Nhập tên file muốn lưu:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(85, 85, 85))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_filegui)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addComponent(txt_fileluu))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(172, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txt_filegui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_fileluu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
+                    .addComponent(jButton3)
                     .addComponent(jButton2))
                 .addGap(105, 105, 105))
         );
@@ -83,7 +117,10 @@ public class GuiThongTin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          JFileChooser fc= new JFileChooser();
-    int ret = fc.showOpenDialog(null);
+         FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "JPG & GIF Images", "jpg", "docx");
+         fc.setFileFilter(filter);
+        int ret = fc.showOpenDialog(null);
     
     if (ret== JFileChooser.APPROVE_OPTION) 
     {
@@ -99,10 +136,17 @@ public class GuiThongTin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Server fs = new Server(1988);
-		fs.start();
-    Client f = new Client("localhost", 1988, filename);
+        
+        String diachi = txt_filegui.getText();
+        Client f = new Client(diachi, 1988, filename);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String tenFile = txt_fileluu.getText();
+        Server fs = new Server(1988,tenFile);
+		fs.start();
+                JOptionPane.showMessageDialog(null, "xác nhận thành công");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,14 +186,20 @@ public class GuiThongTin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField txt_filegui;
+    private javax.swing.JTextField txt_fileluu;
     // End of variables declaration//GEN-END:variables
 }
 class Server extends Thread{
     private ServerSocket ss;
-	
-	public Server(int port) {
+    private String file_Name;
+	public Server(int port, String name) {
 		try {
 			ss = new ServerSocket(port);
+                        file_Name = name;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -167,12 +217,13 @@ class Server extends Thread{
 	}
 
 	private void saveFile(Socket clientSock) throws IOException {
+                
 		DataInputStream dis = new DataInputStream(clientSock.getInputStream());
-		FileOutputStream fos = new FileOutputStream("testfile.jpg");
+		FileOutputStream fos = new FileOutputStream(file_Name);
 		byte[] buffer = new byte[4096];
 		
 		//int filesize = 15123; // Send file size in separate msg
-                int filesize = 1115123;
+                int filesize = 1715123;
 		int read = 0;
 		int totalRead = 0;
 		int remaining = filesize;
@@ -201,7 +252,7 @@ class Client {
 	}
 	
 	public void sendFile(String file) throws IOException {
-		DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+		DataOutputStream dos = new DataOutputStream(s.getOutputStream());  
 		FileInputStream fis = new FileInputStream(file);
 		byte[] buffer = new byte[4096];
 		

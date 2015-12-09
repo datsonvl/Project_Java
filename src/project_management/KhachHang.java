@@ -32,7 +32,7 @@ public class KhachHang extends javax.swing.JInternalFrame {
      */
     public KhachHang() {
         initComponents();
-        conn = ConnectDatabase.ConnectDB();
+        conn = JavaConnect.ConnectDB();
         updateTableKhachHang();
         autoCompleteTFSeach();
     }

@@ -12,7 +12,7 @@ import javax.swing.*;
  *
  * @author Tran Dat
  */
-public class ConnectDatabase {
+public class JavaConnect {
  
     public static Connection ConnectDB(){
         try{

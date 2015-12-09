@@ -28,7 +28,7 @@ public class HoaDonXuat extends javax.swing.JInternalFrame {
      */
     public HoaDonXuat() {
         initComponents();
-         conn = ConnectDatabase.ConnectDB();   
+         conn = JavaConnect.ConnectDB();   
         UpdateTableHoaDonXuat();
     }
     private void UpdateTableHoaDonXuat() {

@@ -13,41 +13,49 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+
 /**
  *
  * @author Tài
  */
 public class MainActivity extends JFrame {
-        
+
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+
     String useName;
     String password;
-    HoaDonNhap hoaDon = null;
+    int admin;
+
+    HoaDon hoaDon = null;
     KhachHang khachHang = null;
-    Medicine_New thuoc = null;
+    Thuoc thuoc = null;
+    TaiKhoanAdmin taiKhoanAdmin = null;
     TaiKhoan taiKhoan = null;
+    ThongTin thongTin = null;
+
     /**
      * Creates new form Employee_info
      */
     public MainActivity() {
         initComponents();
-        conn = ConnectDatabase.ConnectDB();
-       // updateTable();
-        new Thread(){
+        admin = Login.admin;
+        conn = JavaConnect.ConnectDB();
+        displayAllTable();
+        new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 useName = Login.useNameLogin;
                 labelUseName.setText(useName);
-                
-                while (true) {          
+                while (true) {
                     Calendar cal = new GregorianCalendar();
                     //hien thi ngay thang nam
                     int day = cal.get(Calendar.DAY_OF_MONTH);
                     int month = cal.get(Calendar.MONTH);
                     int year = cal.get(Calendar.YEAR);
-                    labelDate.setText(day+"/"+(month+1)+"/"+year);
+                    
+                    labelDate.setText(day + "/" + (month + 1) + "/" + year);
                     // hien thi thoi gian 
                     int sec = cal.get(Calendar.SECOND);
                     int min = cal.get(Calendar.MINUTE);
@@ -55,68 +63,78 @@ public class MainActivity extends JFrame {
                     String formatSec = String.format("%02d", sec);
                     String formatMin = String.format("%02d", min);
                     String formatHour = String.format("%02d", hour);
-                   
+
                     labelTime.setText(formatHour + ":" + formatMin + ":" + formatSec);
-                    }
+                }
             }
 
         }.start();
-        
-    displayAllTable();
-        
     }
+
     //Display all table in jdesktop table
-    private void displayAllTable(){
-        thuoc = new Medicine_New();
+
+    private void displayAllTable() {
+        thuoc = new Thuoc();
         thuoc.setVisible(true);
         jDestopTable.add(thuoc);
-        
+
         khachHang = new KhachHang();
         khachHang.setVisible(true);
         jDestopTable.add(khachHang);
-        
-        hoaDon = new HoaDonNhap();
+
+        hoaDon = new HoaDon();
         hoaDon.setVisible(true);
         jDestopTable.add(hoaDon);
-        
-        taiKhoan = new TaiKhoan();
-        taiKhoan.setVisible(true);
-        jDestopTable.add(taiKhoan);
+
+        thongTin = new ThongTin();
+        thongTin.setVisible(true);
+        jDestopTable.add(thongTin);
+        if (admin == 1) {
+            taiKhoanAdmin = new TaiKhoanAdmin();
+            taiKhoanAdmin.setVisible(true);
+            jDestopTable.add(taiKhoanAdmin);
+        } else {
+            taiKhoan = new TaiKhoan();
+            taiKhoan.setVisible(true);
+            jDestopTable.add(taiKhoan);
+        }
     }
+
     //close windown login
+
     public void closeWindownMainActivity() {
-         WindowEvent winClosingEven = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        WindowEvent winClosingEven = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEven);
     }
+
     //update current time and date
-    private void currentDateTime(){
+
+    private void currentDateTime() {
         //hien thi tai khoan len labelUseName
-            useName = Login.useNameLogin;
-            labelUseName.setText(useName);
-            Calendar cal = new GregorianCalendar();
-            //hien thi ngay thang nam
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-            int month = cal.get(Calendar.MONTH);
-            int year = cal.get(Calendar.YEAR);
-            labelDate.setText(day+"/"+(month+1)+"/"+year);
-            // hien thi thoi gian 
-            int sec = cal.get(Calendar.SECOND);
-            int min = cal.get(Calendar.MINUTE);
-            int hour = cal.get(Calendar.HOUR);
-            if(min<10){
-                labelTime.setText(hour+":"+"0"+min+":"+sec);
+        useName = Login.useNameLogin;
+        labelUseName.setText(useName);
+        Calendar cal = new GregorianCalendar();
+        //hien thi ngay thang nam
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        labelDate.setText(day + "/" + (month + 1) + "/" + year);
+        // hien thi thoi gian 
+        int sec = cal.get(Calendar.SECOND);
+        int min = cal.get(Calendar.MINUTE);
+        int hour = cal.get(Calendar.HOUR);
+        if (min < 10) {
+            labelTime.setText(hour + ":" + "0" + min + ":" + sec);
+        } else {
+            if (sec < 10) {
+                labelTime.setText(hour + ":" + min + ":" + "0" + sec);
+            } else {
+                labelTime.setText(hour + ":" + min + ":" + sec);
             }
-            else {
-                if(sec<10){
-                    labelTime.setText(hour+":"+min+":"+"0"+sec);
-                }
-                else 
-                    labelTime.setText(hour+":"+min+":"+sec);
-            }
-            
+        }
 
     }
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,15 +152,16 @@ public class MainActivity extends JFrame {
         labelDate = new javax.swing.JLabel();
         labelTime = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lbDangXuat = new javax.swing.JLabel();
         jDestopTable = new javax.swing.JDesktopPane();
         jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuThuoc = new javax.swing.JMenu();
-        jMenuHoaDon = new javax.swing.JMenu();
+        jMenuHoaDonNhap = new javax.swing.JMenu();
         jMenuKhachHang = new javax.swing.JMenu();
-        jMenuThongKe = new javax.swing.JMenu();
+        jMenuTaiKhoan = new javax.swing.JMenu();
+        jMenuThongTin = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("HỆ THỐNG QUẢN LÝ HIỆU THUỐC");
@@ -156,13 +175,15 @@ public class MainActivity extends JFrame {
 
         jLabel2.setText("Tài khoản :");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User Accounts.png"))); // NOI18N
+        labelUseName.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        jLabel6.setText("Đăng xuất");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/user-group.png"))); // NOI18N
+
+        lbDangXuat.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        lbDangXuat.setText("Đăng xuất");
+        lbDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                lbDangXuatMouseClicked(evt);
             }
         });
 
@@ -189,7 +210,7 @@ public class MainActivity extends JFrame {
                         .addComponent(labelUseName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(lbDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,10 +233,8 @@ public class MainActivity extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6))
+                .addComponent(lbDangXuat))
         );
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/banner.png"))); // NOI18N
 
         javax.swing.GroupLayout jDestopTableLayout = new javax.swing.GroupLayout(jDestopTable);
         jDestopTable.setLayout(jDestopTableLayout);
@@ -225,12 +244,16 @@ public class MainActivity extends JFrame {
         );
         jDestopTableLayout.setVerticalGroup(
             jDestopTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGap(0, 591, Short.MAX_VALUE)
         );
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/supplier-new.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/supplier-95.png"))); // NOI18N
 
-        jMenuBar1.setBorder(null);
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 0, 204));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("QUẢN  LÝ  HIỆU  THUỐC");
 
         jMenuThuoc.setText("Thuốc");
         jMenuThuoc.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -240,15 +263,15 @@ public class MainActivity extends JFrame {
         });
         jMenuBar1.add(jMenuThuoc);
 
-        jMenuHoaDon.setText("Hóa đơn");
-        jMenuHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenuHoaDonNhap.setText("Hóa Đơn");
+        jMenuHoaDonNhap.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuHoaDonMouseClicked(evt);
+                jMenuHoaDonNhapMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenuHoaDon);
+        jMenuBar1.add(jMenuHoaDonNhap);
 
-        jMenuKhachHang.setText("Khách hàng");
+        jMenuKhachHang.setText("Khách Hàng");
         jMenuKhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuKhachHangMouseClicked(evt);
@@ -256,13 +279,21 @@ public class MainActivity extends JFrame {
         });
         jMenuBar1.add(jMenuKhachHang);
 
-        jMenuThongKe.setText("Tài khoản");
-        jMenuThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenuTaiKhoan.setText("Tài Khoản");
+        jMenuTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuThongKeMouseClicked(evt);
+                jMenuTaiKhoanMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenuThongKe);
+        jMenuBar1.add(jMenuTaiKhoan);
+
+        jMenuThongTin.setText("Thông Tin");
+        jMenuThongTin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuThongTinMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuThongTin);
 
         setJMenuBar(jMenuBar1);
         jMenuBar1.getAccessibleContext().setAccessibleName("rêf");
@@ -272,26 +303,22 @@ public class MainActivity extends JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jDestopTable))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jDestopTable))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDestopTable)
                 .addContainerGap())
@@ -303,74 +330,121 @@ public class MainActivity extends JFrame {
 
     private void jMenuKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuKhachHangMouseClicked
         // TODO add your handling code here:
-       // closeWindown();
-        if(khachHang == null){
+        // closeWindown();
+        if (khachHang == null) {
             khachHang = new KhachHang();
-            
             khachHang.setVisible(true);
             jDestopTable.add(khachHang);
-           // hoaDon.setVisible(false);
-        }else {
-                khachHang.setVisible(true);
-                hoaDon.setVisible(false);
-                thuoc.setVisible(false);
+
+        } else {
+            khachHang.setVisible(true);
+            hoaDon.setVisible(false);
+            thuoc.setVisible(false);
+            if (admin == 1) {
+                taiKhoanAdmin.setVisible(false);
+            } else {
                 taiKhoan.setVisible(false);
+            }
+            thongTin.setVisible(false);
         }
     }//GEN-LAST:event_jMenuKhachHangMouseClicked
-    
-    private void jMenuHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHoaDonMouseClicked
-        // TODO add your handling code here:
-        //closeWindown();
-        if(hoaDon == null){
-            hoaDon = new HoaDonNhap();
-            
+
+    private void jMenuHoaDonNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHoaDonNhapMouseClicked
+        if (hoaDon == null) {
+            hoaDon = new HoaDon();
+
             hoaDon.setVisible(true);
             jDestopTable.add(hoaDon);
-           // khachHang.setVisible(false);
-        }else {
+
+        } else {
             hoaDon.setVisible(true);
             khachHang.setVisible(false);
             thuoc.setVisible(false);
-            taiKhoan.setVisible(false);
+            if (admin == 1) {
+                taiKhoanAdmin.setVisible(false);
+            } else {
+                taiKhoan.setVisible(false);
+            }
+            thongTin.setVisible(false);
         }
-       
-    }//GEN-LAST:event_jMenuHoaDonMouseClicked
+
+    }//GEN-LAST:event_jMenuHoaDonNhapMouseClicked
 
     private void jMenuThuocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuThuocMouseClicked
         // TODO add your handling code here:
-        if(thuoc == null){
-            thuoc = new Medicine_New();
+        if (thuoc == null) {
+            thuoc = new Thuoc();
             thuoc.setVisible(true);
             jDestopTable.add(thuoc);
-        }else {
+        } else {
             thuoc.setVisible(true);
             khachHang.setVisible(false);
             hoaDon.setVisible(false);
-            taiKhoan.setVisible(false);
+            if (admin == 1) {
+                taiKhoanAdmin.setVisible(false);
+            } else {
+                taiKhoan.setVisible(false);
+            }
+            thongTin.setVisible(false);
+
         }
     }//GEN-LAST:event_jMenuThuocMouseClicked
 
-    private void jMenuThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuThongKeMouseClicked
+    private void jMenuTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuTaiKhoanMouseClicked
         // TODO add your handling code here:
-        if(taiKhoan == null){
-            taiKhoan = new TaiKhoan();
-            taiKhoan.setVisible(true);
-            jDestopTable.add(taiKhoan);
-        }else {
-            taiKhoan.setVisible(true);
-            thuoc.setVisible(false);
-            hoaDon.setVisible(false);
-            khachHang.setVisible(false);
+        if (admin == 1) {
+            if (taiKhoanAdmin == null) {
+                taiKhoanAdmin = new TaiKhoanAdmin();
+                taiKhoanAdmin.setVisible(true);
+                jDestopTable.add(taiKhoanAdmin);
+            } else {
+                taiKhoanAdmin.setVisible(true);
+                thuoc.setVisible(false);
+                hoaDon.setVisible(false);
+                khachHang.setVisible(false);
+                thongTin.setVisible(false);
+            }
+        } else {
+            if (taiKhoan == null) {
+                taiKhoan = new TaiKhoan();
+                taiKhoan.setVisible(true);
+                jDestopTable.add(taiKhoan);
+            } else {
+                taiKhoan.setVisible(true);
+                thuoc.setVisible(false);
+                hoaDon.setVisible(false);
+                khachHang.setVisible(false);
+                thongTin.setVisible(false);
+            }
         }
-    }//GEN-LAST:event_jMenuThongKeMouseClicked
+    }//GEN-LAST:event_jMenuTaiKhoanMouseClicked
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-            
+    private void lbDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDangXuatMouseClicked
+
         closeWindownMainActivity();
         Login login = new Login();
         login.setVisible(true);
-        
-    }//GEN-LAST:event_jLabel6MouseClicked
+
+    }//GEN-LAST:event_lbDangXuatMouseClicked
+
+    private void jMenuThongTinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuThongTinMouseClicked
+        if (thongTin == null) {
+            thongTin = new ThongTin();
+            thongTin.setVisible(true);
+            jDestopTable.add(thongTin);
+        } else {
+            thongTin.setVisible(true);
+            if (admin == 1) {
+                taiKhoanAdmin.setVisible(false);
+            } else {
+                taiKhoan.setVisible(false);
+            }
+            thuoc.setVisible(false);
+            hoaDon.setVisible(false);
+            khachHang.setVisible(false);
+
+        }
+    }//GEN-LAST:event_jMenuThongTinMouseClicked
 
     /**
      * @param args the command line arguments
@@ -415,18 +489,19 @@ public class MainActivity extends JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuHoaDon;
+    private javax.swing.JMenu jMenuHoaDonNhap;
     private javax.swing.JMenu jMenuKhachHang;
-    private javax.swing.JMenu jMenuThongKe;
+    private javax.swing.JMenu jMenuTaiKhoan;
+    private javax.swing.JMenu jMenuThongTin;
     private javax.swing.JMenu jMenuThuoc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelDate;
     private javax.swing.JLabel labelTime;
     private javax.swing.JLabel labelUseName;
+    private javax.swing.JLabel lbDangXuat;
     // End of variables declaration//GEN-END:variables
 }

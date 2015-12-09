@@ -32,7 +32,7 @@ public class HoaDonNhap extends javax.swing.JInternalFrame {
      */
     public HoaDonNhap() {
         initComponents();
-        conn = ConnectDatabase.ConnectDB();   
+        conn = JavaConnect.ConnectDB();   
         UpdateTableHoaDonNhap();
     }
     private void UpdateTableHoaDonNhap() {
